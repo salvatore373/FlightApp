@@ -1,7 +1,7 @@
 ## Schermate
 #### Login e registratazione
 - Login: campi email, password per login<br/>
-- Registrazione: campi nome, cognome, email, password, conferma password per registrazione<br/>
+- Registrazione: campi nome, cognome, username, email, password, conferma password per registrazione<br/>
 
 Opzionali: aggiungere "Ricordami" e "Hai dimenticato la password"
 <br/><br/>
