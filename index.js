@@ -3,6 +3,9 @@ const app = express()
 // Express-Session utilizza i cookie per mantenere lo stato di sessione del client,
 // ma memorizza i dati della sessione sul server
 const session = require('express-session');
+const constants = require("./constants");
+const {Client} = require('pg');
+const bcrypt = require('bcrypt');
 
 // per utilizzare pug, modulo per gestione pagine dinamiche
 app.set('view engine', 'pug');
@@ -18,9 +21,7 @@ app.use(session({
 }));
 
 //gestione dell'interazione tra applicazione e database PostgreSQL
-const connectionString = 'postgresql://postgres:alessio2001@localhost:5432/Persone';
-const {Client} = require('pg');
-const bcrypt = require('bcrypt');
+const connectionString = constants.connectionString;
 const client = new Client({
     connectionString: connectionString
 });
