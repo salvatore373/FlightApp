@@ -38,3 +38,7 @@ Dopo la conferma un popup avvisa dell'avvenuta prenotazione ed è possibile visu
 #### Live tracker Voli ?
 Schermata che permette di inserire ID di un volo e trovarlo sulla mappa. Inoltre viene mostrato quanto è stato volato e quanto manca con un arco che collega due pallini (partenza e destinazione) e, in base alla proporzione della distanza percorsa sul totale, l'aereo si trova in un determinato punto dell'arco.
 <br/><br/>
+
+#### Dataset relativi ad aeroporti, compagnie aeree, tratte e tipi Aeroplani
+https://github.com/massimilianobaldo-university/ProjectDB/tree/main/csv/new
+<br/><br/>
