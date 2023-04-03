@@ -39,7 +39,7 @@ const requireAuth = (req, res, next) => {
 //METODI GET
 app.get("/", (req, res) => {
     //link per andare alla pagina del form
-    res.send("<h1> HOMEPAGE </h1> <a href='api/sign-up/'>Clicca qui per andare nella pagina di iscrizione</a>")
+    res.sendFile('homepage.html', {root: __dirname + "/public"})
 });
 app.get("/api/sign-in", (req, res) => {
     res.sendFile('signin.html', {root: __dirname + "/public"})
