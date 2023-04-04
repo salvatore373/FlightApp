@@ -1,0 +1,10 @@
+:root {
+    --primary-color: #2ECC71;
+    --primary-light-color: #FFFFFF;
+    --secondary-color: #9BE8BB;
+    --tertiary-color: #08605F;
+    --tertiary-contrast-color: #177E89;
+    /*usage var(--var-name);*/
+
+    font-family: 'Lato', sans-serif;
+}

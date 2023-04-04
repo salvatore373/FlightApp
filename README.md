@@ -42,3 +42,26 @@ Schermata che permette di inserire ID di un volo e trovarlo sulla mappa. Inoltre
 #### Dataset relativi ad aeroporti, compagnie aeree, tratte e tipi Aeroplani
 https://github.com/massimilianobaldo-university/ProjectDB/tree/main/csv/new
 <br/><br/>
+
+# Design
+
+### Sito Icone:
+
+https://www.streamlinehq.com/icons/streamline-mini-line
+
+### Design Reference (Flat Design)
+
+https://designmodo.github.io/Flat-UI/
+
+### Colori
+
+- Primary: ![#2ECC71](https://placehold.co/30x30/2ECC71/2ECC71.png) `#2ECC71`
+- Primary Light: ![#FFFFFF](https://placehold.co/30x30/FFFFFF/FFFFFF.png) `#FFFFFF`
+- Secondary: ![#9BE8BB](https://placehold.co/30x30/9BE8BB/9BE8BB.png) `#9BE8BB`
+- Tertiary: ![#08605F](https://placehold.co/30x30/08605F/08605F.png) `#08605F`
+- Tertiary Contrast: ![#177E89](https://placehold.co/30x30/177E89/177E89.png) `#177E89`
+- Tertiary (Alternative): ![#7C77B9](https://placehold.co/30x30/7C77B9/7C77B9.png) `#7C77B9`
+- Tertiary Contrast (Alternative): ![#1D8A99](https://placehold.co/30x30/1D8A99/1D8A99.png) `#1D8A99`
+
+### Font (Lato)
+https://fonts.google.com/specimen/Lato
