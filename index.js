@@ -12,6 +12,7 @@ app.set('view engine', 'pug');
 // middleware utilizzato per prendere i dati da form
 app.use(express.urlencoded({extended: false}))
 // middleware che serve i file statici contenuti all'interno della directory public
+app.use(express.static("./"))
 app.use(express.static("./public"))
 
 app.use(session({
