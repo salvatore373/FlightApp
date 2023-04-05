@@ -3,9 +3,11 @@ const app = express()
 // Express-Session utilizza i cookie per mantenere lo stato di sessione del client,
 // ma memorizza i dati della sessione sul server
 const session = require('express-session');
-const constants = require("./constants");
+const constants = require("./configuration");
 const {Client} = require('pg');
 const bcrypt = require('bcrypt');
+
+const routesDir = '/src/routes';
 
 // per utilizzare pug, modulo per gestione pagine dinamiche
 app.set('view engine', 'pug');
@@ -14,6 +16,7 @@ app.use(express.urlencoded({extended: false}))
 // middleware che serve i file statici contenuti all'interno della directory public
 app.use(express.static("./"))
 app.use(express.static("./public"))
+app.use(express.static("./src/"))
 
 app.use(session({
     secret: 'il-mio-segreto-segretissimo',
@@ -40,7 +43,7 @@ const requireAuth = (req, res, next) => {
 //METODI GET
 app.get("/", (req, res) => {
     //link per andare alla pagina del form
-    res.sendFile('homepage.html', {root: __dirname + "/public"})
+    res.sendFile(`.${routesDir}/homepage/homepage.html`,{root: __dirname});
 });
 app.get("/api/sign-in", (req, res) => {
     res.sendFile('signin.html', {root: __dirname + "/public"})
