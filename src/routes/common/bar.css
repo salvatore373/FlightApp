@@ -1,0 +1,25 @@
+.flight_app_navbar {
+    background-color: var(--primary-color);
+    max-height: 50px;
+}
+
+.navbar-brand img {
+    max-height: 50px;
+    height: 100%;
+    width: 100%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+}
+
+.btn-dark {
+    background: var(--primary-color);
+    border: none;
+}
+
+.nav-link {
+    color: var(--primary-light-color)
+}
+
+.btn {
+    color: var(--primary-light-color)
+}

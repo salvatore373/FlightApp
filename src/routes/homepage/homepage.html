@@ -14,26 +14,16 @@
     <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
     <script type="text/javascript" src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script>
-        function actionFun(login, signup) {
-            f = document.querySelector("#formLS")
-            if (login == true) {
-                f.action = "http://localhost:3000/api/sign-in/"
-            }
-            if (signup == true) {
-                f.action = "http://localhost:3000/api/sign-up/"
-            }
-        }
-    </script>
-
-
+    <script type="text/javascript" src="src/routes/common/bar.js"></script>
 </head>
-<body style="height: 2000px;">
+<body style="height: 2000px;" onload="loadBar();">
 
+
+<div id="navbar"></div>
     
 
 <!-- Navbar--> 
-<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light justify-content-between">
+<!--<nav class="navbar fixed-top navbar-expand-lg navbar-light bg-light justify-content-between">
     <div style="display: flex; align-items: center;">
         <a class="navbar-brand" href="./logoFlightApp.jpeg"><img src="logoFlightApp.jpeg" width="80" height="60"
                                                                  class="d-inline-block align-top"></a>
@@ -73,7 +63,7 @@
             Sign-Up
         </button>
     </form>
-</nav> 
+</nav> -->
 </body>
 </html>
 

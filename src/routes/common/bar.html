@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Navigation Bar</title>
+
+    <!-- Link a font Lato -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <link rel="stylesheet" href="/global.css">
+    <link rel="stylesheet" href="/src/routes/common/bar.css">
+    <script type="text/javascript" src="./pagesRoutes.js"></script>
+</head>
+<body>
+
+<nav class="flight_app_navbar navbar fixed-top navbar-expand-lg navbar-dark justify-content-between px-2">
+    <div style="display: flex; align-items: center;">
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/dashboard">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Tracker</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">About</a>
+                </li>
+
+                <!-- DEBUG -->
+                <!--<li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Link
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="#">Action</a></li>
+                        <li><a class="dropdown-item" href="#">Another action</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" href="#">Something else here</a></li>
+                    </ul>
+                </li>-->
+            </ul>
+        </div>
+    </div>
+    <a class="navbar-brand" href="/dashboard">
+        <img src="../../../assets/images/logo_text.png" class="d-inline-block align-top">
+    </a>
+
+    <div>
+        <form class="form-inline" id="unauthForm">
+            <button class="btn btn-dark my-2 my-sm-0" type="submit" id="signInBtn" onclick="actionFun(true,false)">
+                Sign-In
+            </button>
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="signUpBtn"
+                    onclick="actionFun(false,true)">
+                Sign-Up
+            </button>
+        </form>
+        <form class="form-inline" id="authForm">
+            <a class="btn btn-dark my-2 my-sm-0" id="accountBtn" href="#">
+                Profilo
+            </a>
+            <a class="btn btn-outline-success my-2 my-sm-0" id="logOutBtn" href="#">
+                Log Out
+            </a>
+        </form>
+    </div>
+</nav>
+</body>
+</html>
