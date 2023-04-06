@@ -5,7 +5,6 @@ FlightApp.iml
 .idea/vcs.xml
 /node_modules/
 .idea/dataSources.xml
-constants.js
-constants.js
+configuration.js
 .idea/jupyter-settings.xml
 .idea/.name

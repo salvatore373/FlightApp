@@ -15,8 +15,8 @@ function loadBar() {
     });
 }
 
-function actionFun(login, signup) {
-    let f = document.querySelector("#formLS");
+function UnauthloginOrSignup(login, signup) {
+    let f = document.querySelector("#unauthForm");
     if (login == true) {
         f.action = "http://localhost:3000/api/sign-in/";
     }

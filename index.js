@@ -46,10 +46,10 @@ app.get("/", (req, res) => {
     res.sendFile(`.${routesDir}/homepage/homepage.html`,{root: __dirname});
 });
 app.get("/api/sign-in", (req, res) => {
-    res.sendFile('signin.html', {root: __dirname + "/public"})
+    res.sendFile('signin.html', {root: __dirname + "/src/routes/signin/"})
 });
 app.get("/api/sign-up", (req, res) => {
-    res.sendFile('signup1.html', {root: __dirname + "/public"})
+    res.sendFile('signup.html', {root: __dirname + "/src/routes/signup/"})
 });
 
 // Pagina protetta
@@ -67,6 +67,7 @@ app.get('/logout', (req, res) => {
         }
     });
 });
+
 
 //METODI POST
 
@@ -139,7 +140,6 @@ app.post("/api/sign-in", (req, res) => {
         }
     })
 });
-
 
 app.listen(3000);
   
