@@ -1,0 +1,94 @@
+body, html {   
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+      font-family: Arial, sans-serif;
+      background-color: #f1f1f1;
+      background-repeat: no-repeat;
+      background-size: calc(100% - 10%) calc(100% - 10%);
+      background-position: center;
+    }
+    
+
+  #signinForm {
+      position: absolute;
+      left: 50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      background-color: #fff;
+      max-width: 500px;
+      padding: 2%;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(5, 5, 5, 0.3);
+    }
+    
+    h1 {
+      text-align: center;
+      color:rgb(28, 25, 25);
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 2%;
+      color: #666;
+    }
+    
+    button {
+      background-color:var(--primary-color);
+       
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 4%;
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    input[type="submit"] {
+      background-color:var(--primary-color);
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      padding: 10px 20px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+    
+    input[type="submit"]:hover {
+      background-color: #555;
+    }
+    
+    .error {
+      color: #c00;
+      margin-bottom: 10px;
+    }
+    
+    .success {
+      color: #0c0;
+      margin-bottom: 10px;
+    }
+    
+    .links {
+      text-align: center;
+      margin-top: 20px;
+      color: #666;
+    }
+    
+    .links a {
+      color: #333;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+    
+    .links a:hover {
+      color: #555;
+    }

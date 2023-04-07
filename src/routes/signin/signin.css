@@ -1,20 +1,33 @@
+body, html {   
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
 body {
+    background-image: url(flight2.jpeg);
     font-family: Arial, sans-serif;
     background-color: #f1f1f1;
+    background-repeat: no-repeat;
+    background-size: calc(100% - 10%) calc(100% - 10%);
+    background-position: center;
   }
   
-  form {
+#signinForm {
+    position: absolute;
+    left: 50%;
+    top:50%;
+    transform:translate(-50%,-50%);
     background-color: #fff;
     max-width: 500px;
-    margin: 0 auto;
-    padding: 20px;
+    padding: 2%;
     border-radius: 10px;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 20px rgba(5, 5, 5, 0.3);
   }
   
   h1 {
     text-align: center;
-    color:var(--primary-color);
+    color:rgb(28, 25, 25);
   }
   
   label {
@@ -23,6 +36,11 @@ body {
     color: #666;
   }
   
+  button {
+    background-color:var(--primary-color);
+     
+  }
+
   input[type="email"],
   input[type="password"] {
     display: block;
