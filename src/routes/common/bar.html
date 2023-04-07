@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,13 +20,21 @@
 </head>
 <body>
 
-<nav class="flight_app_navbar navbar fixed-top navbar-expand-lg navbar-dark justify-content-between px-2">
-    <div style="display: flex; align-items: center;">
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
-                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="flight_app_navbar navbar fixed-top navbar-expand-lg navbar-dark px-2">
+    <div class="container-fluid" id="navbarElementsContainer">
+        <!-- Button to toggle collapsed menu -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse"
+                aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+        <!-- App logo -->
+        <a class="navbar-brand mx-auto" href="/dashboard">
+            <img src="../../../assets/images/logo_text.png" class="d-inline-block align-top">
+        </a>
+
+        <!-- Collapsable menu -->
+        <div class="navbar-collapse collapse multi-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="/dashboard">Home</a>
@@ -54,29 +62,27 @@
                 </li>-->
             </ul>
         </div>
-    </div>
-    <a class="navbar-brand" href="/dashboard">
-        <img src="../../../assets/images/logo_text.png" class="d-inline-block align-top">
-    </a>
 
-    <div>
-        <form class="form-inline" id="unauthForm">
-            <button class="btn btn-dark my-2 my-sm-0" type="submit" id="signInBtn" onclick="UnauthloginOrSignup(true,false)">
-                Sign-In
-            </button>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="signUpBtn"
-                    onclick="UnauthloginOrSignup(false,true)">
-                Sign-Up
-            </button>
-        </form>
-        <form class="form-inline" id="authForm">
-            <a class="btn btn-dark my-2 my-sm-0" id="accountBtn" href="#">
-                Profilo
-            </a>
-            <a class="btn btn-outline-success my-2 my-sm-0" id="logOutBtn" href="#">
-                Log Out
-            </a>
-        </form>
+        <!-- Authentication-based buttons -->
+        <div class="navbar-collapse collapse multi-collapse" style="flex: inherit;">
+            <form class="form-inline" id="unauthForm">
+                <button class="btn btn-dark my-2 my-sm-0" type="submit" id="signInBtn" onclick="actionFun(true,false)">
+                    Sign-In
+                </button>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="signUpBtn"
+                        onclick="actionFun(false,true)">
+                    Sign-Up
+                </button>
+            </form>
+            <form class="form-inline" id="authForm">
+                <a class="btn btn-dark my-2 my-sm-0" id="accountBtn" href="#">
+                    Profilo
+                </a>
+                <a class="btn btn-outline-success my-2 my-sm-0" id="logOutBtn" href="#">
+                    Log Out
+                </a>
+            </form>
+        </div>
     </div>
 </nav>
 </body>
