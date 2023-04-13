@@ -85,8 +85,3 @@ https://designmodo.github.io/Flat-UI/
 
 ### Font (Lato)
 https://fonts.google.com/specimen/Lato
-
-### Codici di errore 
-1000 --> Credenziali errate
-1001 --> Email non combacia con l'espressione regolare definita appositamente (in caso di iscrizione)
- 
