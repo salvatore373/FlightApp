@@ -13,6 +13,8 @@ const routesDir = '/src/routes';
 app.set('view engine', 'pug');
 // middleware utilizzato per prendere i dati da form
 app.use(express.urlencoded({extended: false}))
+
+
 // middleware che serve i file statici contenuti all'interno della directory public
 app.use(express.static("./"))
 app.use(express.static("./public"))
@@ -51,6 +53,9 @@ app.get("/api/sign-in", (req, res) => {
 app.get("/api/sign-up", (req, res) => {
     res.sendFile('signup.html', {root: __dirname + "/src/routes/signup/"})
 });
+app.get("/avvenuta-iscrizione",(req,res)=>{
+    res.sendFile('avvenuta_iscrizione.html', {root: __dirname + "/src/routes/avvenuta_iscrizione/"})
+})
 
 // Pagina protetta
 app.get('/dashboard', requireAuth, (req, res) => {
@@ -72,10 +77,29 @@ app.get('/logout', (req, res) => {
 //METODI POST
 
 //iscrizione
+
+/*Codici di errore dell'iscrizione:
+1000: email in formato scorretto
+1001: violazione vincolo di chiave primaria (email)
+1002: violazione vincolo di chiave (username)   
+1003: password e conferma_password sono diverse
+*/
+
 app.post("/api/sign-up", (req, res) => {
     console.log(req.body)
 
-    const {nome, cognome, email, password, conferma_password} = req.body
+    const {nome, cognome, username, email, password, conferma_password} = req.body
+    
+    if(password != conferma_password){
+        return res.send({code:1003})
+    }
+
+    //controllo formato email
+    const regex = /^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$/;
+    console.log(!regex.test(email))
+    if(!regex.test(email)){
+        return res.send({code:1000})
+    }
 
     if (password != conferma_password) {
         res.send("Le due password immesse non sono uguali. <a href=/api/sign-up>Clicca qui per tornare alla pagina di scrizione</a>'")
@@ -84,20 +108,24 @@ app.post("/api/sign-up", (req, res) => {
         const saltRounds = 10;
 
         bcrypt.hash(password, saltRounds, function (err, hash) {
-            const query = 'INSERT INTO Credenziali (nome,cognome,email, pass) VALUES ($1, $2, $3, $4)';
-            const values = [nome, cognome, email, hash];
+            const query = 'INSERT INTO Credenziali (nome,cognome,email, pass, username) VALUES ($1, $2, $3, $4, $5)';
+            const values = [nome, cognome, email, hash, username];
 
             client.query(query, values, (err, result) => {
                 if (err) {
 
-                    if (err.code === '23505') { // codice di errore per la violazione di un vincolo univoco
-                        return res.status(400).send('Errore: l\'indirizzo email è già registrato. <a href=/>Click here to return to the Homepage</a>');
+                    if (err.constraint === 'credenziali_pkey') { // codice di errore per la violazione di un vincolo di primary key 
+                        return res.send({code:1001})
+                    }
+                    if(err.constraint === 'vincolo_username'){//vincolo dichiarato in questo modo nel DB 
+                        return res.send({code:1002})
                     }
 
-                    console.log(err.message);
-                    res.status(500).send('Error inserting data');
+                    console.log(err.constraint);
                 } else {
-                    res.status(200).send('Data inserted successfully!!!<a href=/>Click here to come back</a>');
+                    res.redirect("/")
+                    res.status(200)
+                    //res.status(200).send('Data inserted successfully!!!<a href=/>Click here to come back</a>');
                 }
             })
 
@@ -114,6 +142,7 @@ app.post("/api/sign-in", (req, res) => {
     const query = 'SELECT pass from Credenziali WHERE email = $1';
     const values = [email];
 
+    
     client.query(query, values, (err, resultQuery) => {
         if (err) {
             resultQuery.status(500).send('Error');
@@ -133,8 +162,9 @@ app.post("/api/sign-in", (req, res) => {
                     req.session.user = email; //vado a CREARE il campo user all'interno di req.session e lo setto uguale alla mail
 
                     res.redirect("/dashboard")
+                    res.status(200)
                 } else {
-                    res.send('La password non corrisponde!');
+                    res.sendStatus(400)
                 }
             })
         }

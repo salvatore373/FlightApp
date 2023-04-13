@@ -15,9 +15,15 @@
 
     <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
     <script type="text/javascript" src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
+ 
+	<script
+	src="https://code.jquery.com/jquery-3.6.4.min.js"
+	integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+	crossorigin="anonymous"></script>
 
     <script type="text/javascript" src="/src/routes/common/bar.js"></script>
-    
+	<script type="text/javascript" src="/src/routes/signup/signup.js"></script>
+
     <link rel="stylesheet" href="/src/routes/signup/signup.css"> 
     <link rel="stylesheet" href="/global.css">
 
@@ -26,46 +32,27 @@
 
     <body onload="loadBar();" >
 		<div id="navbar"></div>
-		<form id="signinForm"action="http://localhost:3000/api/sign-in/" method="POST">
+		<form id="signupForm" action="http://localhost:3000/api/sign-up/" method="POST">
 			<h1 style="font-family: 'Permanent Marker', cursive;"><b>SIGN-UP : Iscriviti</b></h1>
 			
             <label for="nome">Nome:</label>
-		    <input type="text" id="nome" name="nome" required>
+		    <input type="text" id="nome" name="nome" required onfocus="this.style.outline='none'">
 		 	<label for="cognome">Cognome:</label>
-			<input type="text" id="cognome" name="cognome" required>
+			<input type="text" id="cognome" name="cognome" required onfocus="this.style.outline='none'">
 			<label for="username">Username:</label>
-			<input type="text" id="username" name="username" required>
+			<input type="text" id="username" name="username" required onfocus="this.style.outline='none'">
 			<label for="email">Email:</label>
-			<input type="email" id="email" name="email" required>
-			<label for="password">Password:</label>
-			<input type="password" id="password" name="password" required>
-			<label for="conferma_password">Conferma password:</label>
-			<input type="password" id="conferma_password" name="conferma_password" required>
+			<input type="email" id="email" name="email" onkeydown="hideErrorMessage()" required onfocus="this.style.outline='none' ">
+		    <div>
+			    <label for="password">Password:</label>
+			    <input type="password" id="password" name="password" required onfocus="this.style.outline='none'">
+			    <label for="conferma_password">Conferma password:</label>
+			    <input type="password" id="conferma_password" name="conferma_password" required onfocus="this.style.outline='none'">
+		    	<button type="button" id="show-password-button" onclick="showPassword()">Mostra</button>
+            </div><br>
+			<p class="invalid-credentials" id="error-message"></p>
 		    <input type="submit" value="Iscriviti">
 		</form>
 	  </body>
-
-	<!--
-    <body onload="loadBar();">
-	<div class="navbar"></div>
-	<div class="container">
-	<form action="http://localhost:3000/api/sign-up/" method="post">
-		<label for="nome">Nome:</label>
-		<input type="text" id="nome" name="nome" required>
-		<label for="cognome">Cognome:</label>
-		<input type="text" id="cognome" name="cognome" required>
-		<label for="username">Username:</label>
-		<input type="text" id="username" name="username" required>
-		<label for="email">Email:</label>
-		<input type="email" id="email" name="email" required>
-		<label for="password">Password:</label>
-		<input type="password" id="password" name="password" required>
-		<label for="conferma_password">Conferma password:</label>
-		<input type="password" id="conferma_password" name="conferma_password" required>
-		<input type="submit" value="Registrati">
-	</form>
-    </div>
-</body>
--->
 </html>
 

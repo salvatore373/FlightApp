@@ -5,7 +5,6 @@ body, html {
   padding: 0;
 }
 body {
-    background-image: url(flight2.jpeg);
     font-family: Arial, sans-serif;
     background-color: #f1f1f1;
     background-repeat: no-repeat;
@@ -36,18 +35,20 @@ body {
     color: #666;
   }
   
-  button {
-    background-color:var(--primary-color);
-     
+  #show-password-button {
+    background-color:var(--secondary-color);
+    border-radius: 5px;
   }
 
   input[type="email"],
-  input[type="password"] {
+  input[type="password"],
+  input[type="text"] {
     display: block;
     width: 100%;
     padding: 10px;
     margin-bottom: 20px;
-    border: none;
+    /*border: none;*/
+    border-width: 3px;
     border-radius: 5px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
   }
@@ -66,28 +67,12 @@ body {
     background-color: #555;
   }
   
-  .error {
-    color: #c00;
-    margin-bottom: 10px;
-  }
-  
-  .success {
-    color: #0c0;
-    margin-bottom: 10px;
-  }
-  
-  .links {
-    text-align: center;
-    margin-top: 20px;
-    color: #666;
-  }
-  
-  .links a {
-    color: #333;
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-  
-  .links a:hover {
-    color: #555;
-  }
+.invalid-credentials{
+  background-color: #ffe4e4;
+  border:1px solid #ff7f7f;
+  color: #f00;
+  display: none;/*non lo faccio apparire inizialmente*/
+  font-size:14px;
+  margin:10px 0;
+  padding: 10px;
+}

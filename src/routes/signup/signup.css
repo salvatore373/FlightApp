@@ -13,7 +13,7 @@ body, html {
     }
     
 
-  #signinForm {
+  #signupForm {
       position: absolute;
       left: 50%;
       top:50%;
@@ -67,28 +67,12 @@ body, html {
       background-color: #555;
     }
     
-    .error {
-      color: #c00;
-      margin-bottom: 10px;
-    }
-    
-    .success {
-      color: #0c0;
-      margin-bottom: 10px;
-    }
-    
-    .links {
-      text-align: center;
-      margin-top: 20px;
-      color: #666;
-    }
-    
-    .links a {
-      color: #333;
-      text-decoration: none;
-      transition: color 0.2s ease;
-    }
-    
-    .links a:hover {
-      color: #555;
+    .invalid-credentials{
+      background-color: #ffe4e4;
+      border:1px solid #ff7f7f;
+      color: #f00;
+      display: none;/*non lo faccio apparire inizialmente*/
+      font-size:14px;
+      margin:10px 0;
+      padding: 10px;
     }
