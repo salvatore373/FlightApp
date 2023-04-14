@@ -56,6 +56,9 @@ app.get("/api/sign-up", (req, res) => {
 app.get("/avvenuta-iscrizione",(req,res)=>{
     res.sendFile('avvenuta_iscrizione.html', {root: __dirname + "/src/routes/avvenuta_iscrizione/"})
 })
+app.get("/flights", (req, res) => {
+    res.sendFile(`.${routesDir}/flights/flights.html`,{root: __dirname});
+});
 
 // Pagina protetta
 app.get('/dashboard', requireAuth, (req, res) => {
