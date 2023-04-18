@@ -38,6 +38,7 @@ $(document).ready(function() {
         type: 'POST',
         data: {email: email, password: password},
         success: function(data) {
+            localStorage.setItem('authenticated', 'true');
             window.location.href = "/dashboard";
         },
         error: function(xhr, status, error) {

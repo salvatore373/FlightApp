@@ -29,11 +29,16 @@ function UnauthloginOrSignup(login, signup) {
  * Adapts the navigation bar to the user's authentication state
  */
 function adaptToAuthentication() {
-    let authenticated = false; // TODO: change it
+    let authenticated = localStorage.getItem('authenticated') === 'true';
     if (authenticated) {
         let a = document.getElementById("unauthForm");
         document.getElementById("unauthForm").style.display = 'none'
     } else {
         document.getElementById("authForm").style.display = 'none'
     }
+}
+
+function logOut() {
+    localStorage.setItem('authenticated', 'false');
+    window.location.href = "/logout";
 }

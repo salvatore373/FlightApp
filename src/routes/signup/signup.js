@@ -43,6 +43,7 @@ $(document).ready(function() {
             }
             
             if(data.code === undefined){
+                localStorage.setItem('authenticated', 'true');
                 window.location.href = "/avvenuta-iscrizione";
             }
         },
