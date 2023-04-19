@@ -59,6 +59,9 @@ app.get("/avvenuta-iscrizione",(req,res)=>{
 app.get("/flights", (req, res) => {
     res.sendFile(`.${routesDir}/flights/flights.html`,{root: __dirname});
 });
+app.get("/booking", (req, res) => {
+    res.sendFile(`.${routesDir}/booking/booking.html`,{root: __dirname});
+});
 
 // Pagina protetta
 app.get('/dashboard', requireAuth, (req, res) => {

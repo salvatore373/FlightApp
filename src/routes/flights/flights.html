@@ -22,5 +22,60 @@
 
 <div id="navbar"></div>
 
+<div class="flight-card2">
+    <div class="d-flex flex-row flex-wrap justify-content-around align-items-center">
+        <div class="d-flex flex-column">
+            <!-- First trip row -->
+            <div class="flight-container mb-3">
+                <img class="airline-logo2"
+                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/ITA_Airways_Logo.svg/2560px-ITA_Airways_Logo.svg.png">
+
+                <div class="d-flex flex-row">
+                    <div class="container-section">
+                        <p class="air-code" aria-label="depAirCode">FCO</p>
+                        <p class="time" aria-label="depTime">8:40</p>
+                    </div>
+                    <div class="container-section" style="height: 100%;">
+                        <p class="duration">2h 15m</p>
+                        <img class="airplane-arrow" src="/assets/icons/airplane.png" style="transform: scaleX(-1);">
+                        <p class="stopovers">+1 scalo</p>
+                    </div>
+                    <div class="container-section">
+                        <p class="air-code" aria-label="arrAirCode">JFK</p>
+                        <p class="time" aria-label="arrTime">23:00</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Second trip row to hide or show when the trip is two or one-way -->
+            <div class="flight-container mb-3">
+                <img class="airline-logo2"
+                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/ITA_Airways_Logo.svg/2560px-ITA_Airways_Logo.svg.png">
+
+                <div class="d-flex flex-row">
+                    <div class="container-section">
+                        <p class="air-code" aria-label="depAirCode">FCO</p>
+                        <p class="time" aria-label="depTime">8:40</p>
+                    </div>
+                    <div class="container-section" style="height: 100%;">
+                        <p class="duration">2h 15m</p>
+                        <img class="airplane-arrow" src="/assets/icons/airplane.png" style="transform: scaleX(1);">
+                        <p class="stopovers">+1 scalo</p>
+                    </div>
+                    <div class="container-section">
+                        <p class="air-code" aria-label="arrAirCode">JFK</p>
+                        <p class="time" aria-label="arrTime">23:00</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr/>
+        <div class="container-section">
+            <p class="price-h">Prezzo totale:</p>
+            <p class="price">€46</p>
+            <button type="submit" class="primary-btn" onclick="goToBooking(this);" data-flightid="sal">Prenota</button>
+        </div>
+    </div>
+</div>
+
 </body>
 </html>

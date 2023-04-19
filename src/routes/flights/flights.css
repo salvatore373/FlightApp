@@ -1,0 +1,96 @@
+/*.flight-card {
+    width: 60vw;
+    !*background-color: var(--background-color);*!
+    background-color: #FAF9EC;
+
+    display: flex;
+    flex-direction: column;
+    !*justify-content: start;*!
+    !*align-content: start;*!
+}
+.flight-card-content {
+    height: 200px;
+
+    display: flex;
+    flex-direction: row;
+    !*justify-content: start;*!
+    align-content: center;
+}*/
+
+
+.primary-btn {
+    background-color: var(--primary-color);
+    color: var(--primary-light-color);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.primary-btn:hover {
+    background-color: var(--primary-color-hover);
+}
+
+.flight-card2 {
+    width: 60vw;
+    background-color: #FAF9EC;
+
+    /*max-width: ; TODO:*/
+}
+
+.flight-container {
+    height: 180px;
+
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    justify-content: center;
+    align-content: center;
+}
+
+.airline-logo2 {
+    height: 50%;
+    width: auto;
+}
+
+.airplane-arrow {
+    /*color: #0b5ed7;*/
+    /*filter: invert(23%) sepia(71%) saturate(3381%) hue-rotate(210deg) brightness(90%) contrast(92%);*/
+    /* https://codepen.io/sosuke/pen/Pjoqqp */
+
+    width: 80%;
+    height: auto;
+}
+
+.container-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+
+    margin-left: 8px;
+    margin-right: 8px;
+}
+
+.price {
+    font-weight: 200 !important;
+    text-align: center;
+}
+
+.price-h {
+    font-weight: 200 !important;
+    text-align: center;
+}
+
+.time {
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.air-code {
+    font-size: 24px;
+    line-height: 13px;
+    font-weight: 200;
+}
