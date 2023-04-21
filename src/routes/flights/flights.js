@@ -1,5 +1,9 @@
 console.log(window.location.search)
 
+$(document).ready(() => {
+    initForm();
+});
+
 function displayFlight() {
 }
 

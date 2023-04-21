@@ -11,10 +11,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
     <script type="text/javascript" src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <script type="text/javascript" src="src/routes/common/bar.js"></script>
+    <script type="text/javascript" src="src/routes/homepage/homepage.js"></script>
     <script type="text/javascript" src="src/routes/flights/flights.js"></script>
     <link rel="stylesheet" href="/src/routes/flights/flights.css">
 </head>
@@ -22,6 +24,78 @@
 
 <div id="navbar"></div>
 
+<!-- New search bar -->
+<form id="bookerForm">
+    <div class="params-selector d-flex flex-wrap flex-row">
+        <div class="d-flex flex-row">
+            <!-- Departure field -->
+            <div class="form-group form-floating form-outline flex-grow-1">
+                <input type="text" class="form-control" name="departure" id="departureField" list="airportsList"
+                       autocomplete="on" placeholder="Partenza" required>
+                <label style="margin-left: 0px;" for="departureField">Partenza</label>
+                <datalist id="airportsList"></datalist>
+                <script>loadAirportsList();</script>
+            </div>
+            <!-- Arrival field -->
+            <div class="form-group form-floating form-outline flex-grow-1">
+                <input type="text" class="form-control" id="arrivalField" list="airportsList" placeholder="Arrivo"
+                       required>
+                <label style="margin-left: 0px;" for="arrivalField">Arrivo</label>
+            </div>
+        </div>
+
+        <div class="d-flex flex-row">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+                <div class="d-flex flex-row" style="column-gap: 12px;">
+                    <!-- Dep Date field -->
+                    <div class="form-group row">
+                        <div class="form-group form-floating form-outline">
+                            <input type="date" class="form-control" id="departureDateField" placeholder="Dal:" required>
+                            <label for="departureDateField">Dal:</label>
+                        </div>
+                    </div>
+                    <!-- Arr Date field -->
+                    <div class="form-group row">
+                        <div class="form-group form-floating form-outline" id="arrivalDateFieldCont">
+                            <input type="date" class="form-control" id="arrivalDateField" placeholder="Al:" required>
+                            <script>setMinDate();</script>
+                            <label for="arrivalDateField">Al:</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group form-check">
+                    <input class="form-check-input" type="checkbox" id="onlyDepCheckbox"
+                           onchange="toggleArrivalDate();">
+                    <label class="form-check-label" for="onlyDepCheckbox">
+                        Solo Andata
+                    </label>
+                </div>
+            </div>
+
+            <!-- People field -->
+            <div class="form-group row">
+                <div class="form-group form-floating form-outline">
+                    <input type="number" class="form-control" id="adultsNumField" placeholder="Adulti" value="1"
+                           max="10" required>
+                    <label for="adultsNumField">Adulti</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <div class="form-group form-floating form-outline">
+                    <input type="number" class="form-control" id="childrenNumField" placeholder="Bambini" value="0"
+                           max="10"
+                           required>
+                    <label for="childrenNumField">Bambini</label>
+                </div>
+            </div>
+
+            <!-- New Search btn -->
+            <button type="submit" class="primary-btn">Nuova Ricerca</button>
+        </div>
+    </div>
+</form>
+
+<!-- The card to show a flight's info -->
 <div class="flight-card2">
     <div class="d-flex flex-row flex-wrap justify-content-around align-items-center">
         <div class="d-flex flex-column">
@@ -72,7 +146,7 @@
         <div class="container-section">
             <p class="price-h">Prezzo totale:</p>
             <p class="price">€46</p>
-            <button type="submit" class="primary-btn" onclick="goToBooking(this);" data-flightid="sal">Prenota</button>
+            <button type="submit" class="primary-btn" onclick="goToBooking(this);" data-flightid="">Prenota</button>
         </div>
     </div>
 </div>

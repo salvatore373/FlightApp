@@ -17,6 +17,9 @@
     align-content: center;
 }*/
 
+body {
+    min-width: 708px;
+}
 
 .primary-btn {
     background-color: var(--primary-color);
@@ -34,6 +37,7 @@
 
 .flight-card2 {
     width: 60vw;
+    min-width: 424px;
     background-color: #FAF9EC;
 
     /*max-width: ; TODO:*/
@@ -93,4 +97,22 @@
     font-size: 24px;
     line-height: 13px;
     font-weight: 200;
+}
+
+
+.params-selector {
+    row-gap: 12px;
+    column-gap: 8px;
+    max-height: 154px;
+    flex-grow:1;
+
+    justify-content: center;
+    align-content: center;
+}
+.params-selector > div {
+    column-gap: 12px;
+    flex-grow: 1;
+
+    justify-content: center;
+    align-items: flex-start;
 }
