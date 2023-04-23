@@ -38,7 +38,11 @@ $(document).ready(function() {
         type: 'POST',
         data: {email: email, password: password},
         success: function(data) {
+            localStorage.setItem("email", email)
             localStorage.setItem('authenticated', 'true');
+            setTimeout(()=>{
+                localStorage.setItem('authenticated', 'false')//dopo 10 minuti viene risettata a false
+            },600000);
             window.location.href = "/dashboard";
         },
         error: function(xhr, status, error) {

@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>SIGN-IN</title>
+        <!-- Link a font Lato -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script
+			  src="https://code.jquery.com/jquery-3.6.4.min.js"
+			  integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+			  crossorigin="anonymous"></script>
+
+    <script type="text/javascript" src="/src/routes/common/bar.js"></script>
+    <script type="text/javascript" src="/src/routes/profilePage/profilePage.js"></script>
+    
+    <link rel="stylesheet" href="/src/routes/profilePage/profilePage.css"> 
+    <link rel="stylesheet" href="/global.css">
+  
+   
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
+    <script
+    src="https://code.jquery.com/jquery-3.6.4.min.js"
+    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+    crossorigin="anonymous"></script>
+    <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
+  </head>
+
+  <body onload="loadBar(true)">
+  <div id="navbar"></div>
+
+
+    <!-- Content -->
+    <div class="container mt-5">
+        <div class="row">
+          <div class="col-md-3">
+            <div class="list-group" id="list-tab" role="tablist">
+              <a class="list-group-item list-group-item-action active" id="list-password-list" data-bs-toggle="list" href="#password" role="tab" aria-controls="password">Cambia Password</a>
+              <a class="list-group-item list-group-item-action" id="button-info" data-bs-toggle="list" href="#informazioni-personali" role="tab" aria-controls="nome">Informazioni Personali</a>
+              <a class="list-group-item list-group-item-action" id="list-altro-list" data-bs-toggle="list" href="#biglietti" role="biglietti" aria-controls="biglietti">Biglietti acquistati</a>
+              <a class="list-group-item list-group-item-action" id="list-altro-list" data-bs-toggle="list" href="#altro" role="tab" aria-controls="altro">Altra Impostazione</a>
+              <a class="list-group-item list-group-item-action" id="list-cancellazione-list" data-bs-toggle="list" href="#cancellazione-account" role="tab" aria-controls="cancellazione-account">Cancellazione account</a>
+            </div>
+          </div>
+          <div class="col-md-9">
+            <div class="tab-content" id="nav-tabContent">
+              <!-- Cambia Password -->
+              <div class="tab-pane fade show active" id="password" role="tabpanel" aria-labelledby="list-password-list">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Cambia Password</h4>
+                    <form id="resetPassword" action="http://localhost:3000/reset-password/">
+                      <div class="mb-3">
+                        <label for="inputPassword" class="form-label">Password Corrente</label>
+                        <input type="password" class="form-control" id="inputOldPassword" placeholder="Inserisci la password corrente" onkeydown="hideErrorMessage()">
+                      </div>
+                      <div class="mb-3">
+                        <label for="inputNewPassword" class="form-label">Nuova Password</label>
+                        <input type="password" class="form-control" id="inputNewPassword" placeholder="Inserisci la nuova password">
+                      </div>
+                      <div class="mb-3">
+                        <label for="inputConfirmPassword" class="form-label">Conferma Nuova Password</label>
+                        <input type="password" class="form-control" id="inputConfirmPassword" placeholder="Conferma la nuova password">
+                      </div>
+                      <button type="submit" class="btn btn-primary">Salva</button>
+                      <p class="invalid-credentials" id="error-message"></p>
+                      <p class="success-credentials" id="success-message"></p>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" id="informazioni-personali" role="tabpanel" aria-labelledby="button-info">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">Informazioni Personali</h4>
+                    <div class="form-group">
+                      <label for="nome">Nome:</label>
+                      <input type="text" class="form-control" id="nome-form" value="" readonly>
+                    </div>
+                    <div class="form-group">
+                      <label for="cognome">Cognome:</label>
+                      <input type="text" class="form-control" id="cognome-form" value="" readonly>
+                    </div>
+                    <div class="form-group">
+                      <label for="email">Email:</label>
+                      <input type="text" class="form-control" id="email-form" value="" readonly>
+                    </div>
+                    <div class="form-group">
+                      <label for="username">Username:</label>
+                      <input type="text" class="form-control" id="username-form" value="" readonly>
+                    </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="tab-pane fade" id="cancellazione-account" role="tabpanel" aria-labelledby="list-cancellazione-list">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">Cancellazione Account</h4>
+                      <form id="cancellazioneAccount">
+                      <div class="mb-3">
+                        <label for="password">Inserisci Password</label>
+                        <input type="password" class="form-control" id="pass-cancellazione" value="" required>
+                      </div>
+                      <div class="mb-3">
+                        <label for="conf-password">Conferma Password</label>
+                        <input type="password" class="form-control" id="pass-conf-cancellazione" value="" required>
+                      </div>
+                      <!-- Button trigger modal -->
+                      <button id="button-eliminazione-account" type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      Elimina Account
+                      </button>
+                      <p class="invalid-credentials" id="error-message-elimination-account"></p>
+                      </form>
+                      
+                      
+                      <!-- Modal -->
+                      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Cancellazione Account</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              Sei sicuro di voler eliminare l'account ?
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                              <button type="button" class="btn btn-primary">Elimina</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                    </div>
+                  </div>
+                </div>
+           
+              <div>
+ 
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+            
+
+  
+
+
+
+<!-- Footer -->
+<footer class="text-center text-lg-start bg-white text-muted">
+  <!-- Section: Social media -->
+  <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+    <!-- Left -->
+    <div class="me-5 d-none d-lg-block">
+      <span>Get connected with us on social networks:</span>
+    </div>
+    <!-- Left -->
+
+    <!-- Right -->
+    <div>
+      <a href="" class="me-4 link-secondary">
+        <i class="fab fa-facebook-f"></i>
+      </a>
+      <a href="" class="me-4 link-secondary">
+        <i class="fab fa-twitter"></i>
+      </a>
+      <a href="" class="me-4 link-secondary">
+        <i class="fab fa-google"></i>
+      </a>
+      <a href="" class="me-4 link-secondary">
+        <i class="fab fa-instagram"></i>
+      </a>
+      <a href="" class="me-4 link-secondary">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="" class="me-4 link-secondary">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <!-- Right -->
+  </section>
+  <!-- Section: Social media -->
+
+  <!-- Section: Links  -->
+  <section class="">
+    <div class="container text-center text-md-start mt-5">
+      <!-- Grid row -->
+      <div class="row mt-3">
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+          <!-- Content -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            <i class="fas fa-gem me-3 text-secondary"></i>Company name
+          </h6>
+          <p>
+            Here you can use rows and columns to organize your footer content. Lorem ipsum
+            dolor sit amet, consectetur adipisicing elit.
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Products
+          </h6>
+          <p>
+            <a href="#!" class="text-reset">Angular</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">React</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Vue</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Laravel</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">
+            Useful links
+          </h6>
+          <p>
+            <a href="#!" class="text-reset">Pricing</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Settings</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Orders</a>
+          </p>
+          <p>
+            <a href="#!" class="text-reset">Help</a>
+          </p>
+        </div>
+        <!-- Grid column -->
+
+        <!-- Grid column -->
+        <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+          <!-- Links -->
+          <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+          <p><i class="fas fa-home me-3 text-secondary"></i> New York, NY 10012, US</p>
+          <p>
+            <i class="fas fa-envelope me-3 text-secondary"></i>
+            info@example.com
+          </p>
+          <p><i class="fas fa-phone me-3 text-secondary"></i> + 01 234 567 88</p>
+          <p><i class="fas fa-print me-3 text-secondary"></i> + 01 234 567 89</p>
+        </div>
+        <!-- Grid column -->
+      </div>
+      <!-- Grid row -->
+    </div>
+  </section>
+  <!-- Section: Links  -->
+
+  <!-- Copyright -->
+  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
+    © 2021 Copyright:
+    <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+  </div>
+  <!-- Copyright -->
+</footer>
+<!-- Footer -->
+
+  </body>
+
+</html>

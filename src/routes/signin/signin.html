@@ -32,10 +32,10 @@
       <form id="signinForm" action="http://localhost:3000/api/sign-in/" method="POST">
         <h1 style="font-family: 'Permanent Marker', cursive;"><b>SIGN-IN : Accedi</b></h1>
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" value="" onkeydown="hideErrorMessage()" onkeyup='checkEmailInput()' required onfocus="this.style.outline='none' " >
+        <input type="email" id="email" name="email" value="" onkeydown="hideErrorMessage();checkEmailInput();" required>
         <div>
           <label for="password">Password</label>
-          <input type="password" id="password" name="password" required onfocus="this.style.outline='none'">
+          <input type="password" id="password" name="password" required>
           <button type="button" id="show-password-button" onclick="showPassword()">Mostra</button>
           <p class="invalid-credentials" id="error-message"></p>
         </div><br>

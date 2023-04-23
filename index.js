@@ -9,8 +9,6 @@ const bcrypt = require('bcrypt');
 
 const routesDir = '/src/routes';
 
-// per utilizzare pug, modulo per gestione pagine dinamiche
-app.set('view engine', 'pug');
 // middleware utilizzato per prendere i dati da form
 app.use(express.urlencoded({extended: false}))
 
@@ -23,7 +21,8 @@ app.use(express.static("./src/"))
 app.use(session({
     secret: 'il-mio-segreto-segretissimo',
     resave: false,
-    saveUninitialized: true
+    saveUninitialized: true,
+    cookie: {maxAge:30*60*1000,rolling:true}//cookie settati a 30 minuti e rolling a true fara si che la durata della sessione sara sempre rinnovata ad ogni richiesta
 }));
 
 //gestione dell'interazione tra applicazione e database PostgreSQL
@@ -62,10 +61,33 @@ app.get("/flights", (req, res) => {
 app.get("/booking", (req, res) => {
     res.sendFile(`.${routesDir}/booking/booking.html`,{root: __dirname});
 });
+app.get("/profile",(req,res)=>{
+    res.sendFile('profilePage.html', {root: __dirname + "/src/routes/profilePage/"})
+})
+
+//endpoint per gestire informazioni personali del profilo 
+app.get("/get-personal-info", async (req,res)=>{
+    const email = req.session.user
+    console.log(req.session)
+    const query = 'SELECT nome,cognome,username from Credenziali WHERE email = $1';
+    const values = [email];
+    try {
+        const resultQuery = await client.query(query, values);
+
+        const nome = resultQuery.rows[0].nome
+        const cognome = resultQuery.rows[0].cognome
+        const username = resultQuery.rows[0].username
+        console.log(req.session.user)
+        res.status(200)
+        return res.send({nome:nome, cognome:cognome, username:username, email:email})
+    } catch (error) {
+        return res.status(500).send('Error');
+    }
+})
 
 // Pagina protetta
 app.get('/dashboard', requireAuth, (req, res) => {
-    res.render('homepage', {username: req.session.user});
+    res.sendFile('/homepage.html', {root: __dirname + "/src/routes/homepage/"})
 });
 
 // Gestione del logout
@@ -74,6 +96,7 @@ app.get('/logout', (req, res) => {
         if (err) {
             console.log(err);
         } else {
+            //req.session.destroy()
             res.redirect('/api/sign-in');
         }
     });
@@ -140,7 +163,7 @@ app.post("/api/sign-up", (req, res) => {
     }
 });
 
-//utilizza postman per fare la richiesta post
+
 app.post("/api/sign-in", (req, res) => {
 
     const {email, password} = req.body
@@ -162,8 +185,6 @@ app.post("/api/sign-in", (req, res) => {
                 if (err) {
                     res.status(500).send('Error');
                 } else if (result == true) {
-                    req.session.cookie.maxAge = 3600000; // Tempo di scadenza del cookie (in millisecondi)
-                    //una volta scaduto questo tempo, per accedere alla pagina dashboard si dovrà rifare il login
                     req.session.loggedin = true;//vado a CREARE il campo loggedin all'interno di req.session e lo setto a true
                     req.session.user = email; //vado a CREARE il campo user all'interno di req.session e lo setto uguale alla mail
 
@@ -176,6 +197,53 @@ app.post("/api/sign-in", (req, res) => {
         }
     })
 });
+
+
+//CODICI DI ERRORE 
+// 1000 --> password e conferma_password diverse
+// 1001 --> old_password errata
+// success --> password aggiornata correttamente 
+
+app.post("/reset-password/",async (req,res)=>{
+    console.log(req.session)
+
+    const {email, old_pass, new_pass,conf_new_pass} = req.body
+    //gestione errore password diverse
+    if(new_pass !== conf_new_pass){
+        return res.send({code:1000})
+    }
+    const query = 'SELECT pass from Credenziali WHERE email = $1';
+    const values = [email];
+
+    try {
+        const resultQuery = await client.query(query, values);
+
+        const result = await bcrypt.compare(old_pass, resultQuery.rows[0].pass);
+
+        if (result === true) {
+            const saltRounds = 10
+            const new_pass_crypted = await bcrypt.hash(new_pass,saltRounds)
+            const query1 = "UPDATE Credenziali SET pass = $1 WHERE email = $2";
+            const values1 = [new_pass_crypted,req.session.user]
+            const resultQuery1 = await client.query(query1,values1)
+            res.send({code:"success"})
+            res.status(200);
+        } else {
+            return res.send({code:1001});
+        }
+
+    } catch (error) {
+        res.status(500).send('Error');
+    }
+})
+
+app.post("/cancellazione-account",(req,res)=>{
+    const {pass,conf_pass} = req.body
+    console.log(pass)
+    if(pass !== conf_pass ){
+        return res.send({error_code:1000})
+    }
+})
 
 app.listen(3000);
   

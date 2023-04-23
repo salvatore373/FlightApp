@@ -1,0 +1,20 @@
+.invalid-credentials{
+    background-color: #ffe4e4;
+    border:1px solid #ff7f7f;
+    color: #f00;
+    display: none;/*non lo faccio apparire inizialmente*/
+    font-size:14px;
+    margin:10px 0;
+    padding: 10px;
+   /* background-color: rgb(8, 238, 96);*/
+  }
+.success-credentials{
+    background-color: #9BE8BB;
+    border: green;
+    color: green;
+    display: none;/*non lo faccio apparire inizialmente*/
+    font-size:14px;
+    margin:10px 0;
+    padding: 10px;
+    
+}
