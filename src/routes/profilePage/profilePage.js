@@ -89,6 +89,7 @@ $("#button-info").on("click",()=>{
 })
 
 
+//delete account 
 $(document).ready(function() {
   $('#cancellazioneAccount').submit(function(event) {
     event.preventDefault();
@@ -99,8 +100,11 @@ $(document).ready(function() {
       type: 'POST',
       data: {pass:pass,conf_pass:conf_pass},
       success: function(data) {
-          if(data.error_code == 1000){
-              $("#error-message-elimination-account").text("Error: passwords are not equal").show();
+          if(data.error_code == "Success"){
+            $("#exampleModal").modal("show");  
+          }else{
+            $("#annullaModal").click();  
+            $("#error-message-elimination-account").text("Error: passwords are not equal").show();
           }
 
       },

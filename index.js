@@ -149,12 +149,12 @@ app.post("/api/sign-up", (req, res) => {
                     if(err.constraint === 'vincolo_username'){//vincolo dichiarato in questo modo nel DB 
                         return res.send({code:1002})
                     }
-
-                    console.log(err.constraint);
                 } else {
+                    req.session.user = email;//mi salvo la mail lato server in modo tale che 
+                                             //un utente che si è appena iscritto possa vedere 
+                                             //e fare tutto ciò che puo fare un utente gia iscritto (leggere informazioni personali nel profilo e tutto il resto)  
                     res.redirect("/")
                     res.status(200)
-                    //res.status(200).send('Data inserted successfully!!!<a href=/>Click here to come back</a>');
                 }
             })
 
@@ -164,6 +164,10 @@ app.post("/api/sign-up", (req, res) => {
 });
 
 
+
+//CODICI DI ERRORE /api/sign-in
+// "Error" -> errore
+// "Success" --> login andato a buon fine 
 app.post("/api/sign-in", (req, res) => {
 
     const {email, password} = req.body
@@ -177,24 +181,21 @@ app.post("/api/sign-in", (req, res) => {
             resultQuery.status(500).send('Error');
         }
 
-        if (resultQuery.rows[0] === undefined) res.send("Email non presente nel DB")
+        if (resultQuery.rows[0] === undefined) return res.send({code:"Error"})
+        
+        bcrypt.compare(password, resultQuery.rows[0].pass, (err, result) => {
+            if (err) {
+                return res.status(500).send({code:"Error"});
+            } else if (result == true) {
+                req.session.loggedin = true;//vado a CREARE il campo loggedin all'interno di req.session e lo setto a true
+                req.session.user = email; //vado a CREARE il campo user all'interno di req.session e lo setto uguale alla mail
 
-        else {
-
-            bcrypt.compare(password, resultQuery.rows[0].pass, (err, result) => {
-                if (err) {
-                    res.status(500).send('Error');
-                } else if (result == true) {
-                    req.session.loggedin = true;//vado a CREARE il campo loggedin all'interno di req.session e lo setto a true
-                    req.session.user = email; //vado a CREARE il campo user all'interno di req.session e lo setto uguale alla mail
-
-                    res.redirect("/dashboard")
-                    res.status(200)
-                } else {
-                    res.sendStatus(400)
-                }
-            })
-        }
+                //res.redirect("/dashboard")
+                return res.send({code:"Success"}).status(200)
+            } else {
+                return res.send({code:"Error"})
+            }
+        })    
     })
 });
 
@@ -204,13 +205,13 @@ app.post("/api/sign-in", (req, res) => {
 // 1001 --> old_password errata
 // success --> password aggiornata correttamente 
 
-app.post("/reset-password/",async (req,res)=>{
+app.post("/reset-password",async (req,res)=>{
     console.log(req.session)
-
-    const {email, old_pass, new_pass,conf_new_pass} = req.body
+    const email = req.session.user
+    const {old_pass, new_pass,conf_new_pass} = req.body
     //gestione errore password diverse
     if(new_pass !== conf_new_pass){
-        return res.send({code:1000})
+        return res.send({code:1000}).status(200)
     }
     const query = 'SELECT pass from Credenziali WHERE email = $1';
     const values = [email];
@@ -224,12 +225,12 @@ app.post("/reset-password/",async (req,res)=>{
             const saltRounds = 10
             const new_pass_crypted = await bcrypt.hash(new_pass,saltRounds)
             const query1 = "UPDATE Credenziali SET pass = $1 WHERE email = $2";
-            const values1 = [new_pass_crypted,req.session.user]
+            const values1 = [new_pass_crypted,email]
             const resultQuery1 = await client.query(query1,values1)
             res.send({code:"success"})
             res.status(200);
         } else {
-            return res.send({code:1001});
+            return res.send({code:1001}).status(200);
         }
 
     } catch (error) {

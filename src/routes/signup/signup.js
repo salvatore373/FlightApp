@@ -43,20 +43,11 @@ $(document).ready(function() {
             }
             
             if(data.code === undefined){
-                localStorage.setItem('authenticated', 'true');
+                localStorage.setItem('authenticated', 'true');//salvataggio lato client dello stato di autenticazione 
                 window.location.href = "/avvenuta-iscrizione";
             }
         },
         error: function(xhr, status, error) {
-            /*
-            if(status == 401){
-                $("#error-message").text("Email scorretta").show();
-            }else if(status == 402){
-                $("#error-message").text("Email già presente nel DB").show();
-            }else{
-                $("#error-message").text("Errore").show();
-            }*/
-             
         }
       });
     });
@@ -71,6 +62,11 @@ function hideErrorMessage(){
 
     const passInput = document.getElementById("password")
     passInput.addEventListener("input",()=>{
+        document.getElementById("error-message").style.display = "none"
+    })
+
+    const usernameInput = document.getElementById("username")
+    usernameInput.addEventListener("input",()=>{
         document.getElementById("error-message").style.display = "none"
     })
 

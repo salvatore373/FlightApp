@@ -38,18 +38,19 @@ $(document).ready(function() {
         type: 'POST',
         data: {email: email, password: password},
         success: function(data) {
-            localStorage.setItem("email", email)
-            localStorage.setItem('authenticated', 'true');
-            setTimeout(()=>{
-                localStorage.setItem('authenticated', 'false')//dopo 10 minuti viene risettata a false
-            },600000);
-            window.location.href = "/dashboard";
+            if(data.code == "Success"){
+                localStorage.setItem("email", email)
+                localStorage.setItem('authenticated', 'true');
+                setTimeout(()=>{
+                    localStorage.setItem('authenticated', 'false')//dopo 10 minuti viene risettata a false
+                },600000);
+                window.location.href = "/dashboard";
+            }else{
+                $("#error-message").text("Credenziali errate").show();
+            }
         },
         error: function(xhr, status, error) {
-            $("#error-message").text("Credenziali errate").show();    
-            //svuoto campi input 
-            //$("#email").val("")//
-            //$("#password").val("")   
+            $("#error-message").text("Credenziali errate").show();      
         }
       });
     });
