@@ -63,6 +63,11 @@ Schermata che permette di inserire ID di un volo e trovarlo sulla mappa. Inoltre
 https://github.com/massimilianobaldo-university/ProjectDB/tree/main/csv/new
 <br/><br/>
 
+#### API voli
+Traking: https://aviationstack.com/product
+Deals: https://developers.amadeus.com/self-service/category/air/api-doc/flight-offers-search/api-reference
+<br/><br/>
+
 # Design
 
 ### Sito Icone:
