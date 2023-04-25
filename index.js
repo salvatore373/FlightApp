@@ -66,9 +66,8 @@ app.get("/profile",(req,res)=>{
 })
 
 //endpoint per gestire informazioni personali del profilo 
-app.get("/get-personal-info", async (req,res)=>{
+app.get("/get-personal-info", requireAuth , async (req,res)=>{
     const email = req.session.user
-    console.log(req.session)
     const query = 'SELECT nome,cognome,username from Credenziali WHERE email = $1';
     const values = [email];
     try {
@@ -85,6 +84,27 @@ app.get("/get-personal-info", async (req,res)=>{
     }
 })
 
+//endpoint per gestione cancellazione account 
+app.get("/eliminazione-account", requireAuth , async (req,res)=>{
+    const email = req.session.user
+    const query = 'DELETE FROM Credenziali WHERE email = $1';
+    const values = [email];
+    try {
+        const resultQuery = await client.query(query, values);
+        
+        req.session.destroy(err => {
+            if (err) {
+                console.log(err);
+            } else {
+                return res.send("Account cancellato")        
+            }
+        });
+
+    } catch (error) {
+        return res.status(500).send('Cancellazione account non è andata a buon fine');
+    }
+})
+
 // Pagina protetta
 app.get('/dashboard', requireAuth, (req, res) => {
     res.sendFile('/homepage.html', {root: __dirname + "/src/routes/homepage/"})
@@ -96,7 +116,6 @@ app.get('/logout', (req, res) => {
         if (err) {
             console.log(err);
         } else {
-            //req.session.destroy()
             res.redirect('/api/sign-in');
         }
     });
@@ -115,10 +134,9 @@ app.get('/logout', (req, res) => {
 */
 
 app.post("/api/sign-up", (req, res) => {
-    console.log(req.body)
 
     const {nome, cognome, username, email, password, conferma_password} = req.body
-    
+
     if(password != conferma_password){
         return res.send({code:1003})
     }
@@ -150,6 +168,7 @@ app.post("/api/sign-up", (req, res) => {
                         return res.send({code:1002})
                     }
                 } else {
+                    req.session.loggedin = true;
                     req.session.user = email;//mi salvo la mail lato server in modo tale che 
                                              //un utente che si è appena iscritto possa vedere 
                                              //e fare tutto ciò che puo fare un utente gia iscritto (leggere informazioni personali nel profilo e tutto il resto)  
@@ -205,7 +224,7 @@ app.post("/api/sign-in", (req, res) => {
 // 1001 --> old_password errata
 // success --> password aggiornata correttamente 
 
-app.post("/reset-password",async (req,res)=>{
+app.post("/reset-password", requireAuth , async (req,res)=>{
     console.log(req.session)
     const email = req.session.user
     const {old_pass, new_pass,conf_new_pass} = req.body
@@ -238,11 +257,36 @@ app.post("/reset-password",async (req,res)=>{
     }
 })
 
-app.post("/cancellazione-account",(req,res)=>{
+//CODICI DI ERRORE
+// success --> passato il controllo sulla password
+// 1000 --> passwords are not equal
+// 1001 --> wrong password after 
+app.post("/cancellazione-account", requireAuth ,async (req,res)=>{
+    
     const {pass,conf_pass} = req.body
-    console.log(pass)
     if(pass !== conf_pass ){
-        return res.send({error_code:1000})
+        return res.send({error_code:1000}).status(200)
+    } else {
+        
+        const email = req.session.user
+        const query = 'SELECT pass from Credenziali WHERE email = $1';
+        const values = [email];
+
+    try {
+        const resultQuery = await client.query(query, values);
+
+        const result = await bcrypt.compare(pass, resultQuery.rows[0].pass);
+
+        if (result === true) {
+            return res.send({error_code:"success"}).status(200)
+            
+        } else {
+            return res.send({error_code:1001}).status(200);
+        }
+
+    } catch (error) {
+        res.status(500).send('Error');
+    }   
     }
 })
 

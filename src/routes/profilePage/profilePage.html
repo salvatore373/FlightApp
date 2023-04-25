@@ -26,8 +26,6 @@
     <link rel="stylesheet" href="/src/routes/profilePage/profilePage.css"> 
     <link rel="stylesheet" href="/global.css">
   
-   
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">-->
     <script
     src="https://code.jquery.com/jquery-3.6.4.min.js"
     integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
@@ -115,7 +113,7 @@
                         <input type="password" class="form-control" id="pass-conf-cancellazione" value="" required>
                       </div>
                       <!-- Button trigger modal -->
-                      <button id="button-eliminazione-account" type="submit" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                      <button id="button-eliminazione-account" type="submit" class="btn btn-primary">    <!-- data-bs-toggle="modal" data-bs-target="#exampleModal" -->
                       Elimina Account
                       </button>
                       <p class="invalid-credentials" id="error-message-elimination-account"></p>
@@ -135,7 +133,7 @@
                             </div>
                             <div class="modal-footer">
                               <button id="annullaModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
-                              <button type="button" class="btn btn-primary">Elimina</button>
+                              <form action="/eliminazione-account"><button id="btn-eliminazione-definitiva" type="submit" class="btn btn-primary">Elimina</button></form>
                             </div>
                           </div>
                         </div>

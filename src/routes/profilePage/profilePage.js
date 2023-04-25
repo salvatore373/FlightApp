@@ -89,22 +89,27 @@ $("#button-info").on("click",()=>{
 })
 
 
-//delete account 
+//controllo password delete account 
 $(document).ready(function() {
   $('#cancellazioneAccount').submit(function(event) {
     event.preventDefault();
     const pass = $('#pass-cancellazione').val();
     const conf_pass = $('#pass-conf-cancellazione').val();
     $.ajax({
-      url: '/cancellazione-account/',
+      url: '/cancellazione-account',
       type: 'POST',
       data: {pass:pass,conf_pass:conf_pass},
       success: function(data) {
-          if(data.error_code == "Success"){
+          if(data.error_code == "success"){
             $("#exampleModal").modal("show");  
-          }else{
-            $("#annullaModal").click();  
+          }
+          else if(data.error_code == 1000){
             $("#error-message-elimination-account").text("Error: passwords are not equal").show();
+            $("#exampleModal").modal("hide");
+          }
+          else{
+            $("#error-message-elimination-account").text("Error: Wrong password").show();
+            $("#exampleModal").modal("hide");
           }
 
       },
@@ -114,11 +119,3 @@ $(document).ready(function() {
     });
   });
 });
-
-
-let cont = document.querySelector("#error-message-elimination-account")   //getElementById("error-message-elimination")
-console.log(cont)  
-//if(cont.innerHTML.indexOf("Error") !== -1){//è presente una sottostringa Error
-  //  const popUp = document.getElementById("Modal");
-  //  popUp.style.display = "none";
-  //}
