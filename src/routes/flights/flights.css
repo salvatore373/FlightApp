@@ -116,3 +116,9 @@ body {
     justify-content: center;
     align-items: flex-start;
 }
+
+
+.info-icon {
+    height: 54px;
+    filter: invert(74%) sepia(23%) saturate(1285%) hue-rotate(88deg) brightness(86%) contrast(90%);
+}

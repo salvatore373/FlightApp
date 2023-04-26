@@ -14,9 +14,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
     <script type="text/javascript" src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 
     <script type="text/javascript" src="src/routes/common/bar.js"></script>
     <script type="text/javascript" src="src/routes/homepage/homepage.js"></script>
+    <link rel="stylesheet" href="/src/routes/homepage/homepage.css">
     <script type="text/javascript" src="src/routes/flights/flights.js"></script>
     <link rel="stylesheet" href="/src/routes/flights/flights.css">
 </head>
@@ -95,58 +97,55 @@
     </div>
 </form>
 
-<!-- The card to show a flight's info -->
-<div class="flight-card2">
-    <div class="d-flex flex-row flex-wrap justify-content-around align-items-center">
-        <div class="d-flex flex-column">
-            <!-- First trip row -->
-            <div class="flight-container mb-3">
-                <img class="airline-logo2"
-                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/ITA_Airways_Logo.svg/2560px-ITA_Airways_Logo.svg.png">
+<div id="listContainer">
+    <div v-if="isLoading" class="d-flex justify-content-center align-items-center">
+        <img class="info-icon"
+             src="https://icon-library.com/images/spinner-icon-gif/spinner-icon-gif-0.jpg"
+             alt="Loading Spinner"/>
+    </div>
+    <div v-if="!isLoading && isError" class="d-flex flex-column justify-content-center align-items-center">
+        <img class="info-icon"
+             src="/assets/icons/warning.png"
+             alt="Warning Sign"/>
+        <p>Si è verificato un errore durante la ricerca dei voli. Si prega di riprovare più tardi.</p>
+    </div>
+    <div v-if="!isLoading && !isError" class="flight-card2 mb-4" v-for="item in results" :key="item.id">
+        <div class="d-flex flex-row flex-wrap justify-content-around align-items-center">
+            <div class="d-flex flex-column">
+                <!-- Create one row for departure and one for back trip-->
+                <div v-for="it in item.flights" :key="it.id">
+                    <div class="flight-container mb-3">
+                        <img class="airline-logo2" :src="it.airlineLogo">
 
-                <div class="d-flex flex-row">
-                    <div class="container-section">
-                        <p class="air-code" aria-label="depAirCode">FCO</p>
-                        <p class="time" aria-label="depTime">8:40</p>
-                    </div>
-                    <div class="container-section" style="height: 100%;">
-                        <p class="duration">2h 15m</p>
-                        <img class="airplane-arrow" src="/assets/icons/airplane.png" style="transform: scaleX(-1);">
-                        <p class="stopovers">+1 scalo</p>
-                    </div>
-                    <div class="container-section">
-                        <p class="air-code" aria-label="arrAirCode">JFK</p>
-                        <p class="time" aria-label="arrTime">23:00</p>
+                        <div class="d-flex flex-row">
+                            <div class="container-section">
+                                <p class="air-code" aria-label="depAirCode">{{it.dep}}</p>
+                                <p class="time" aria-label="depTime">{{it.depTime}}</p>
+                            </div>
+                            <div class="container-section" style="height: 100%;">
+                                <p class="duration">2h 15m</p>
+                                <img v-if="it.id === 0" class="airplane-arrow" src="/assets/icons/airplane.png"
+                                     style="transform: scaleX(-1);">
+                                <img v-if="it.id === 1" class="airplane-arrow" src="/assets/icons/airplane.png"
+                                     style="transform: scaleX(1);">
+                                <p class="stopovers">
+                                    +{{it.stopovers === 1 ? '1 scalo' : it.stopovers + ' scali'}}</p>
+                            </div>
+                            <div class="container-section">
+                                <p class="air-code" aria-label="arrAirCode">{{it.arr}}</p>
+                                <p class="time" aria-label="arrTime">{{it.arrTime}}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- Second trip row to hide or show when the trip is two or one-way -->
-            <div class="flight-container mb-3">
-                <img class="airline-logo2"
-                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/ITA_Airways_Logo.svg/2560px-ITA_Airways_Logo.svg.png">
-
-                <div class="d-flex flex-row">
-                    <div class="container-section">
-                        <p class="air-code" aria-label="depAirCode">FCO</p>
-                        <p class="time" aria-label="depTime">8:40</p>
-                    </div>
-                    <div class="container-section" style="height: 100%;">
-                        <p class="duration">2h 15m</p>
-                        <img class="airplane-arrow" src="/assets/icons/airplane.png" style="transform: scaleX(1);">
-                        <p class="stopovers">+1 scalo</p>
-                    </div>
-                    <div class="container-section">
-                        <p class="air-code" aria-label="arrAirCode">JFK</p>
-                        <p class="time" aria-label="arrTime">23:00</p>
-                    </div>
-                </div>
+            <hr/>
+            <div class="container-section">
+                <p class="price-h">Prezzo totale:</p>
+                <p class="price">€{{item.price}}</p>
+                <button type="submit" class="primary-btn" onclick="goToBooking(this);" data-flightid="">Prenota
+                </button>
             </div>
-        </div>
-        <hr/>
-        <div class="container-section">
-            <p class="price-h">Prezzo totale:</p>
-            <p class="price">€46</p>
-            <button type="submit" class="primary-btn" onclick="goToBooking(this);" data-flightid="">Prenota</button>
         </div>
     </div>
 </div>
