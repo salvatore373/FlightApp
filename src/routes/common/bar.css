@@ -23,4 +23,6 @@
     color: var(--primary-light-color)
 }
 
-.multi-collapse collapse
+#dropdownUser {
+    gap: 8px;
+}
