@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
     <title>SIGN-IN</title>
         <!-- Link a font Lato -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,7 +21,7 @@
 
     <script type="text/javascript" src="/src/routes/common/bar.js"></script>
     <script type="text/javascript" src="/src/routes/signin/signin.js"></script>
-    
+
     <link rel="stylesheet" href="/src/routes/signin/signin.css"> 
     <link rel="stylesheet" href="/global.css">
 
@@ -39,7 +38,27 @@
           <button type="button" id="show-password-button" onclick="showPassword()">Mostra</button>
           <p class="invalid-credentials" id="error-message"></p>
         </div><br>
-        <input id="submit" type="submit" value="Accedi">
+
+        <div class="row">
+          <div class="col-6 text-left">
+            
+          </div> 
+
+          <div class="col-6 text-right">
+            <label for="email"><b>Oppure accedi con</b></label>
+          </div>
+        </div>
+
+
+          <div class="row">
+            <div class="col-6 text-left">
+              <input id="submit" type="submit" value="Accedi">
+            </div>
+            <div class="col-6 text-right">
+              <a id="googleButton" class="btn btn-primary btn-with-image btn-light" href="/auth/google" role="button"></a>
+            </div>
+          </div>
+
       </form>
   </body>
 </html>

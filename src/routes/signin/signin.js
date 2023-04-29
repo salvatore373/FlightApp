@@ -1,4 +1,4 @@
-function showPassword(){
+ function showPassword(){
     const pass = document.getElementById("password")
     const showButton = document.getElementById("show-password-button")
 

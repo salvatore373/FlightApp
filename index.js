@@ -9,6 +9,9 @@ const bcrypt = require('bcrypt');
 
 const routesDir = '/src/routes';
 
+const passportSetup = require("./config/passport-setup")
+const passport = require("passport")
+
 // middleware utilizzato per prendere i dati da form
 app.use(express.urlencoded({extended: false}))
 
@@ -24,6 +27,12 @@ app.use(session({
     saveUninitialized: true,
     cookie: {maxAge:30*60*1000,rolling:true}//cookie settati a 30 minuti e rolling a true fara si che la durata della sessione sara sempre rinnovata ad ogni richiesta
 }));
+
+const cookieParser = require("cookie-parser")
+app.use(cookieParser())
+
+app.use(passport.initialize())
+app.use(passport.session())
 
 //gestione dell'interazione tra applicazione e database PostgreSQL
 const connectionString = constants.connectionString;
@@ -112,6 +121,13 @@ app.get('/dashboard', requireAuth, (req, res) => {
 
 // Gestione del logout
 app.get('/logout', (req, res) => {
+    
+    //to reset the right navbar when the client logged with google and press logout
+    res.clearCookie("logged")
+    res.clearCookie("nameUser");
+    res.clearCookie("photoUser");
+
+    //to clear session 
     req.session.destroy(err => {
         if (err) {
             console.log(err);
@@ -206,6 +222,8 @@ app.post("/api/sign-in", (req, res) => {
             if (err) {
                 return res.status(500).send({code:"Error"});
             } else if (result == true) {
+                res.cookie("logged",true)
+                
                 req.session.loggedin = true;//vado a CREARE il campo loggedin all'interno di req.session e lo setto a true
                 req.session.user = email; //vado a CREARE il campo user all'interno di req.session e lo setto uguale alla mail
 
@@ -289,6 +307,35 @@ app.post("/cancellazione-account", requireAuth ,async (req,res)=>{
     }   
     }
 })
+
+
+//auth with google
+app.get("/auth/google",passport.authenticate("google",{
+    scope:["profile","email"] // the user have to puts the profile informations 
+}));
+
+//callback route for google to redirect to 
+//we have to puts passport middleware also hero to exchange code in the url for profile information
+app.get("/auth/google/redirect",passport.authenticate("google") ,(req,res)=>{
+    //req.session.authenticated=true;
+    //res.send(req.user)// ci sarà l'id restituitoci da google
+    res.cookie("logged",true)
+    res.cookie("nameUser",req.user.name.givenName)//utilizzo dei cookie per inviare informazioni dal server al client
+    res.cookie("photoUser",req.user.photos[0].value)
+
+    res.redirect("/")
+})
+
+
+
+//middleware che in caso di utente non loggato con google lo redirecta sulla pagina di login 
+const authCheck =(req,res,next)=>{
+    if(!req.user){//if user is not logged in 
+        res.redirect("/sign-in");
+    }else{
+        next();
+    }
+}
 
 app.listen(3000);
   
