@@ -1,0 +1,171 @@
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 16px;
+}
+
+.plane {
+    margin: 20px auto;
+    /*max-width: 300px;*/
+    width: 500px;
+}
+
+.cockpit {
+    height: 250px;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    border-bottom: 5px solid #d8d8d8;
+}
+
+.cockpit:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 500px;
+    width: 100%;
+    border-radius: 50%;
+    border-right: 5px solid #d8d8d8;
+    border-left: 5px solid #d8d8d8;
+}
+
+.cockpit :is(h1, h2, h3, h4, h5, h6) {
+    width: 60%;
+    margin: 100px auto 35px auto;
+}
+
+.exit {
+    position: relative;
+    height: 50px;
+}
+
+.exit:before, .exit:after {
+    content: "EXIT";
+    font-size: 14px;
+    line-height: 18px;
+    padding: 0px 2px;
+    font-family: "Arial Narrow", Arial, sans-serif;
+    display: block;
+    position: absolute;
+    background: green;
+    color: white;
+    top: 50%;
+    transform: translate(0, -50%);
+}
+
+.exit:before {
+    left: 0;
+}
+
+.exit:after {
+    right: 0;
+}
+
+.fuselage {
+    border-right: 5px solid #d8d8d8;
+    border-left: 5px solid #d8d8d8;
+
+    padding-left: 16px;
+    padding-right: 16px;
+    width: 500px;
+}
+
+ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.seats {
+    /*display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;*/
+    display: grid;
+    grid-template-columns: repeat(3, 0.15fr) 0.3fr repeat(3, 0.15fr);
+    padding-bottom: 8px;
+}
+
+.seat-unselected {
+    /* https://stackoverflow.com/questions/42134731/css-change-button-style-after-click */
+    background-color: var(--primary-color);
+}
+
+.seat-selected {
+    background-color: var(--tertiary-color);
+}
+
+.seat-disabled {
+    background-color: grey;
+}
+
+@-webkit-keyframes rubberBand {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+    30% {
+        -webkit-transform: scale3d(1.25, 0.75, 1);
+        transform: scale3d(1.25, 0.75, 1);
+    }
+    40% {
+        -webkit-transform: scale3d(0.75, 1.25, 1);
+        transform: scale3d(0.75, 1.25, 1);
+    }
+    50% {
+        -webkit-transform: scale3d(1.15, 0.85, 1);
+        transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+        -webkit-transform: scale3d(0.95, 1.05, 1);
+        transform: scale3d(0.95, 1.05, 1);
+    }
+    75% {
+        -webkit-transform: scale3d(1.05, 0.95, 1);
+        transform: scale3d(1.05, 0.95, 1);
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+@keyframes rubberBand {
+    0% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+    30% {
+        -webkit-transform: scale3d(1.25, 0.75, 1);
+        transform: scale3d(1.25, 0.75, 1);
+    }
+    40% {
+        -webkit-transform: scale3d(0.75, 1.25, 1);
+        transform: scale3d(0.75, 1.25, 1);
+    }
+    50% {
+        -webkit-transform: scale3d(1.15, 0.85, 1);
+        transform: scale3d(1.15, 0.85, 1);
+    }
+    65% {
+        -webkit-transform: scale3d(0.95, 1.05, 1);
+        transform: scale3d(0.95, 1.05, 1);
+    }
+    75% {
+        -webkit-transform: scale3d(1.05, 0.95, 1);
+        transform: scale3d(1.05, 0.95, 1);
+    }
+    100% {
+        -webkit-transform: scale3d(1, 1, 1);
+        transform: scale3d(1, 1, 1);
+    }
+}
+
+.rubberBand {
+    -webkit-animation-name: rubberBand;
+    animation-name: rubberBand;
+}

@@ -2,9 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Homepage</title>
+
+    <!-- Link a font Lato -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script type="text/javascript" src="src/routes/common/bar.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script type="text/javascript" src="src/routes/booking/booking.js"></script>
+
+    <link rel="stylesheet" href="/src/routes/booking/booking.css">
+    <link rel="stylesheet" href="/src/routes/booking/plane.css">
 </head>
-<body>
+<body onload="loadBar();">
+
+<div id="navbar"></div>
+
+<div class="d-flex flex-row flex-wrap" id="globalContainer">
+    <div>
+        <div class="summary">
+            <div class="d-flex flex-column">
+                <p class="airline-name">{{flight.airlineName}}</p>
+                <div class="d-flex flex-column" v-for="zone in zones" :key="zone.id">
+                    <p class="direction">{{zone.id === 0 ? 'Da' : 'A'}}</p>
+                    <p class="time">{{zone.time}}</p>
+                    <p class="city">{{zone.city}}</p>
+                    <p class="airport">{{zone.airName}}, ({{zone.airCode}})</p>
+
+                    <!-- down arrow separator-->
+                    <div v-if="zone.id === 0">
+                        <img src="/assets/icons/arrow-down.png" alt="Down Arrow" class="summary-separator"/>
+                    </div>
+                </div>
+
+                <div class="info-container">
+                    <div class="info-container-element" v-for="info in additionalInfo" :key="info.id">
+                        <p class="info-header">{{info.header}}</p>
+                        <p class="info-content">{{info.content}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <input v-if="wayBackToConfirm" class="mt-3 primary-btn" value="Conferma il Ritorno" type="button"/>
+        <input v-else class="mt-3 primary-btn" value="Conferma Ordine" type="button"/>
+    </div>
+
+    <div class="plane">
+        <div class="cockpit d-flex flex-column justify-content-center align-items-center">
+            <h2>Seleziona un posto</h2>
+            <h5 style="margin: 0">Selezionati: {{selectedSeats.length}}</h5>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center">
+            <ol class="fuselage" id="seatRows">
+                <li class="row row--1" v-for="i in numberOfSeatRows" :key="i">
+                    <div class="seats">
+                        <button class="seat-unselected" onclick="selectSeat(this);">{{i}}A</button>
+                        <button class="seat-unselected" onclick="selectSeat(this);">{{i}}B</button>
+                        <button class="seat-unselected" onclick="selectSeat(this);">{{i}}C</button>
+                        <div></div>
+                        <button class="seat-unselected" onclick="selectSeat(this);">{{i}}D</button>
+                        <button class="seat-unselected" onclick="selectSeat(this);">{{i}}E</button>
+                        <button class="seat-unselected" onclick="selectSeat(this);">{{i}}F</button>
+                    </div>
+                </li>
+            </ol>
+        </div>
+    </div>
+</div>
 
 </body>
 </html>

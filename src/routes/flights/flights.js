@@ -1,4 +1,4 @@
-console.log(window.location.search)
+console.log(window.location.search) // DEBUG
 
 $(document).ready(() => {
     initForm();
@@ -16,7 +16,7 @@ $(document).ready(() => {
                 let exFlight1 = {
                     'flights': [
                         {
-                            'id':0,
+                            'id': 0,
                             'dep': "FCO",
                             'arr': "JFK",
                             'depTime': "343",
@@ -26,7 +26,7 @@ $(document).ready(() => {
                             'airlineLogo': 'https://picsum.photos/200/300',
                         },
                         {
-                            'id':1,
+                            'id': 1,
                             'dep': "JFK",
                             'arr': "FCO",
                             'depTime': "888",
@@ -41,7 +41,7 @@ $(document).ready(() => {
                 let exFlight2 = {
                     'flights': [
                         {
-                            'id':0,
+                            'id': 0,
                             'dep': "FCOoo",
                             'arr': "JFK",
                             'depTime': "343",
@@ -51,7 +51,7 @@ $(document).ready(() => {
                             'airlineLogo': 'https://picsum.photos/200/300',
                         },
                         {
-                            'id':1,
+                            'id': 1,
                             'dep': "JFK",
                             'arr': "FCOoo",
                             'depTime': "234",
@@ -76,6 +76,19 @@ $(document).ready(() => {
 });
 
 function displayFlight() {
+    // TODO: when selected a flight the json representing andata e ritorno must be saved in localStorage
+    //  selectedFlight: [{}, {
+    //      "depCode": x,
+    //      "arrCode": x,
+    //      "airlineName": x,
+    //      "depTime": x,
+    //      "arrTime": x,
+    //      "duration": x,
+    //      "price": x,
+    //      "adults": x,
+    //      "children": x,
+    //      "stops": x,
+    //  }]
 }
 
 function goToBooking(btn) {
