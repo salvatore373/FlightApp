@@ -49,7 +49,7 @@ $(document).ready(() => {
         mounted() {
 
             // DEBUG
-            localStorage.setItem('selectedFlight', JSON.stringify(
+            /*localStorage.setItem('selectedFlight', JSON.stringify(
                 [{
                     "depCode": 'FCO',
                     "arrCode": 'JFK',
@@ -62,7 +62,7 @@ $(document).ready(() => {
                     "children": 2,
                     "stops": 1,
                 }]
-            ));
+            ));*/
 
             this.fetchResults();
             initializeSeats(this);
