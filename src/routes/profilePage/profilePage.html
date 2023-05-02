@@ -33,7 +33,7 @@
     <!--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>-->
   </head>
 
-  <body onload="loadBar(true)">
+  <body onload="loadBar(true);"><!--loadBiglietto()-->
   <div id="navbar"></div>
 
 
@@ -42,10 +42,11 @@
         <div class="row">
           <div class="col-md-3">
             <div class="list-group" id="list-tab" role="tablist">
-              <a class="list-group-item list-group-item-action active" id="list-password-list" data-bs-toggle="list" href="#password" role="tab" aria-controls="password">Cambia Password</a>
               <a class="list-group-item list-group-item-action" id="button-info" data-bs-toggle="list" href="#informazioni-personali" role="tab" aria-controls="nome">Informazioni Personali</a>
-              <a class="list-group-item list-group-item-action" id="list-altro-list" data-bs-toggle="list" href="#biglietti" role="biglietti" aria-controls="biglietti">Biglietti acquistati</a>
+              <a class="list-group-item list-group-item-action active" id="list-password-list" data-bs-toggle="list" href="#password" role="tab" aria-controls="password" >Cambia Password</a>
+              <a class="list-group-item list-group-item-action" id="list-biglietti-list" data-bs-toggle="list" href="#panel-biglietti" role="biglietti" aria-controls="biglietti">Biglietti acquistati</a>
               <a class="list-group-item list-group-item-action" id="list-cancellazione-list" data-bs-toggle="list" href="#cancellazione-account" role="tab" aria-controls="cancellazione-account">Cancellazione account</a>
+              <a class="list-group-item list-group-item-action" id="list-google-deleteInfo-list" data-bs-toggle="list" href="#cancellazione-googleInfo" role="tab" aria-controls="cancellazione-googleInfo">Cancellazione dati Google</a>
             </div>
           </div>
           <div class="col-md-9">
@@ -75,6 +76,7 @@
                   </div>
                 </div>
               </div>
+              <!--Informazioni Personali-->
               <div class="tab-pane fade" id="informazioni-personali" role="tabpanel" aria-labelledby="button-info">
                 <div class="card">
                   <div class="card-body">
@@ -98,6 +100,7 @@
                     </div>
                   </div>
                 </div>
+                <!--Cancellazione account(solo per utenti iscritti con email e password)-->
                 <div class="tab-pane fade" id="cancellazione-account" role="tabpanel" aria-labelledby="list-cancellazione-list">
                   <div class="card">
                     <div class="card-body">
@@ -141,6 +144,71 @@
                     </div>
                   </div>
                 </div>
+
+                <!--Cancellazioni dati dal DB per gli utenti iscritti tramite Google-->
+                <div class="tab-pane fade" id="cancellazione-googleInfo" role="tabpanel" aria-labelledby="list-google-deleteInfo-list">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">Cancellazione Account</h4>
+                      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#GoogleexampleModal">
+                        Cancella Dati
+                      </button>
+                      <!-- Modal -->
+                      <div class="modal fade" id="GoogleexampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content">
+                            <div class="modal-header">
+                              <h5 class="modal-title" id="exampleModalLabel">Cancellazione Account</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                              Sei sicuro di voler eliminare i dati dell'account Google all'interno del Database ?
+                            </div>
+                            <div class="modal-footer">
+                              <button id="annullaGoogleModal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annulla</button>
+                              <form action="/eliminazione-account-Google"><button id="btn-eliminazione-definitiva" type="submit" class="btn btn-primary">Elimina</button></form>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      </div>
+
+                    </div>
+                  </div>
+                  <div class="tab-pane fade show active" id="panel-biglietti" role="tabpanel" aria-labelledby="list-biglietti-list">
+                    <!--TODO -->
+
+                    <div id="carousel-biglietti" class="carousel slide" data-bs-ride="carousel">
+                      <div class="carousel-indicators">
+                        <!--
+                        <button type="button" data-bs-target="#carousel-biglietti" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#carousel-biglietti" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        
+                        <button type="button" data-bs-target="#carousel-biglietti" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                      -->
+                      </div>
+                      <div class="carousel-inner">
+                        
+                      </div>
+                      <button class="carousel-control-prev" type="button" data-bs-target="#carousel-biglietti" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                      </button>
+                      <button class="carousel-control-next" type="button" data-bs-target="#carousel-biglietti" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                      </button>
+                    </div>
+                    
+                    
+                    
+                    
+
+
+                  </div>
+
+                </div>
            
               <div>
  
@@ -155,17 +223,15 @@
 
 
 
-<!-- Footer -->
+<!-- Footer 
 <footer class="text-center text-lg-start bg-white text-muted">
-  <!-- Section: Social media -->
+   Section: Social media 
   <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
-    <!-- Left -->
+     Left 
     <div class="me-5 d-none d-lg-block">
       <span>Get connected with us on social networks:</span>
     </div>
-    <!-- Left -->
-
-    <!-- Right -->
+     Left 
     <div>
       <a href="" class="me-4 link-secondary">
         <i class="fab fa-facebook-f"></i>
@@ -186,19 +252,17 @@
         <i class="fab fa-github"></i>
       </a>
     </div>
-    <!-- Right -->
+   
   </section>
-  <!-- Section: Social media -->
+  
 
-  <!-- Section: Links  -->
+  
   <section class="">
     <div class="container text-center text-md-start mt-5">
-      <!-- Grid row -->
-      <div class="row mt-3">
-        <!-- Grid column -->
+            <div class="row mt-3">
+        
         <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-          <!-- Content -->
-          <h6 class="text-uppercase fw-bold mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4">
             <i class="fas fa-gem me-3 text-secondary"></i>Company name
           </h6>
           <p>
@@ -206,11 +270,9 @@
             dolor sit amet, consectetur adipisicing elit.
           </p>
         </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
+        
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
-          <!-- Links -->
+         
           <h6 class="text-uppercase fw-bold mb-4">
             Products
           </h6>
@@ -227,11 +289,8 @@
             <a href="#!" class="text-reset">Laravel</a>
           </p>
         </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
+       
         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
-          <!-- Links -->
           <h6 class="text-uppercase fw-bold mb-4">
             Useful links
           </h6>
@@ -248,12 +307,8 @@
             <a href="#!" class="text-reset">Help</a>
           </p>
         </div>
-        <!-- Grid column -->
-
-        <!-- Grid column -->
         <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-          <!-- Links -->
-          <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
+                  <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
           <p><i class="fas fa-home me-3 text-secondary"></i> New York, NY 10012, US</p>
           <p>
             <i class="fas fa-envelope me-3 text-secondary"></i>
@@ -262,21 +317,18 @@
           <p><i class="fas fa-phone me-3 text-secondary"></i> + 01 234 567 88</p>
           <p><i class="fas fa-print me-3 text-secondary"></i> + 01 234 567 89</p>
         </div>
-        <!-- Grid column -->
+        
       </div>
-      <!-- Grid row -->
-    </div>
+          </div>
   </section>
-  <!-- Section: Links  -->
+  
 
-  <!-- Copyright -->
   <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.025);">
     © 2021 Copyright:
     <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
   </div>
-  <!-- Copyright -->
 </footer>
-<!-- Footer -->
+ Footer -->
 
   </body>
 

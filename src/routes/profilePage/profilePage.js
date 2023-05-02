@@ -1,3 +1,50 @@
+
+function getCookieValue(cookieName) {
+  const cookieString = document.cookie;
+  const cookies = cookieString.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+    const cookie = cookies[i].trim();
+    if (cookie.startsWith(cookieName + '=')) {
+      return cookie.substring(cookieName.length + 1);
+    }
+  }
+  return null;
+}
+
+//prima di lavorare sulla pagina carico l'intera pagina utilizzando questo type di listener
+document.addEventListener("DOMContentLoaded", ()=>{
+
+  const googleUser = getCookieValue('nameUser')
+  if(googleUser !== null){
+
+    //eliminazione sezione "Aggiorna Password"
+    const resetPassOnList = document.getElementById("list-password-list")
+    resetPassOnList.remove()
+    //resetPass1.style.display = "none"
+    const resetPassPanel = document.getElementById("password")
+    resetPassPanel.style.display = "none"
+    
+
+    //eliminazione sezione "Cancella Account"
+    const delAccountOnlist = document.getElementById("list-cancellazione-list")
+    delAccountOnlist.remove()
+    const delAccountPanel = document.getElementById("cancellazione-account")
+    delAccountPanel.style.display = "none"
+
+  }else{
+
+    //eliminazione sezione "Cancellazione Dati Google"
+    const delGoogleAccount = document.getElementById("list-google-deleteInfo-list")
+    delGoogleAccount.remove()
+    const delAccountGooglePanel = document.getElementById("cancellazione-googleInfo")
+    delAccountGooglePanel.style.display = "none"
+
+  }
+  
+})
+
+
+
 $(document).ready(function() {
     $('#resetPassword').submit(function(event) {
       event.preventDefault();
@@ -82,11 +129,55 @@ $(document).ready(function() {
   });
 
 
-  
-$("#button-info").on("click",()=>{
-    fetch("/get-personal-info")
-    .then(data => console.log(data))
-})
+$(document).ready(function() {
+  $('#list-biglietti-list').click(function(event) {
+    event.preventDefault();
+    $.ajax({
+      url: '/biglietti-prenotati/',
+      type: 'GET',
+      success: function(response) {
+        var carouselInner = $('#carousel-biglietti .carousel-inner');
+        var carouselIndicators = $('#carousel-biglietti .carousel-indicators');
+
+
+        for (var i = 0; i < response.length; i++) {
+          var item = response[i];
+          var active = i === 0 ? 'active' : '';
+
+          //gestione degli stili css dell'elemento aggiunto
+          var new_div = document.createElement("div");
+          new_div.classList.add("carousel-item");
+          new_div.style.display = "inline-block";
+          new_div.style.position = "relative"
+          new_div.style.width = "33%"
+          new_div.style.top = "0"
+          new_div.style.left = 33 * (i%3) + "%"
+
+          carouselIndicators.append('<button type="button" data-bs-target="#carousel-biglietti" data-bs-slide-to="' + i + '" class="' + active + '"></button>');
+          carouselInner.append(new_div);
+
+          var iframe = document.createElement("iframe");
+          iframe.src = '/src/routes/common/biglietto.html';
+          new_div.appendChild(iframe);
+
+          iframe.addEventListener("load", function() {
+            
+            var iframeContent = iframe.contentDocument;
+            
+            var flightCode = iframeContent.querySelector("#flightCode");
+            flightCode.innerHTML = "<span>Flight</span>"+item.id;
+            
+            var owner = iframeContent.querySelector("#owner");
+            owner.innerHTML = "<span>Passenger</span>" + item.nome + " " + item.cognome
+          });
+        }
+      },
+      error: function(xhr, status, error) {
+        console.log("error")
+      }
+    });
+  });
+});
 
 
 //controllo password delete account 

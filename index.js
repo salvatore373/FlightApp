@@ -74,22 +74,80 @@ app.get("/profile",(req,res)=>{
     res.sendFile('profilePage.html', {root: __dirname + "/src/routes/profilePage/"})
 })
 
-//endpoint per gestire informazioni personali del profilo 
-app.get("/get-personal-info", requireAuth , async (req,res)=>{
-    const email = req.session.user
-    const query = 'SELECT nome,cognome,username from Credenziali WHERE email = $1';
+//endpoint che restituisce i biglietti prenotati dall'utente
+app.get("/biglietti-prenotati",async (req,res)=>{
+    
+    let email = null;
+    let userIsIn = null;
+    //utente si è loggato tramite email e password
+    if(!req.user){
+        email = req.session.user
+        userIsIn = "credenziali" 
+      }
+      else{ //tente si è loggato tramite Google OAuth2
+        email = req.user.email  
+        userIsIn = "googleusers"
+    }
+
+    const query = 'SELECT * from biglietti JOIN ' + userIsIn + ' ON biglietti.email = ' + userIsIn +'.email WHERE biglietti.email = $1' ;
     const values = [email];
     try {
         const resultQuery = await client.query(query, values);
-
-        const nome = resultQuery.rows[0].nome
-        const cognome = resultQuery.rows[0].cognome
-        const username = resultQuery.rows[0].username
-        console.log(req.session.user)
         res.status(200)
-        return res.send({nome:nome, cognome:cognome, username:username, email:email})
+        console.log(resultQuery.rows)
+        return res.send(resultQuery.rows)
     } catch (error) {
         return res.status(500).send('Error');
+    }
+})
+
+
+//endpoint per gestire informazioni personali del profilo 
+app.get("/get-personal-info", requireAuth , async (req,res)=>{
+    
+    //utente si è loggato tramite email e password
+    if(!req.user){
+      const email = req.session.user
+      const query = 'SELECT nome,cognome,username from Credenziali WHERE email = $1';
+      const values = [email];
+      try {
+          const resultQuery = await client.query(query, values);
+   
+          const nome = resultQuery.rows[0].nome
+          const cognome = resultQuery.rows[0].cognome
+          const username = resultQuery.rows[0].username
+          console.log(req.session.user)
+          res.status(200)
+          return res.send({nome:nome, cognome:cognome, username:username, email:email})
+      } catch (error) {
+          return res.status(500).send('Error');
+      }
+    }
+    else{ //tente si è loggato tramite Google OAuth2
+        return res.send({nome:req.user.nome, cognome:req.user.cognome, username:req.user.username, email:req.user.email})
+    }
+})
+
+
+//eliminazione dati dalla tabella googleUsers in caso di accesso con google
+app.get("/eliminazione-account-Google",requireAuth, async(req,res)=>{
+    if(req.user){
+        const query = 'DELETE FROM googleUsers WHERE email = $1'
+        const values = [req.user.email]
+
+        try{
+            const resultQuery = await client.query(query,values)
+            req.session.destroy(err => {
+                if (err) {
+                    console.log(err);
+                } else {
+    
+                    return res.redirect("/logout")//#TODO        
+                }
+            });
+        } catch (error){
+            return res.status(500).send('Cancellazione dati non è andata a buon fine');
+        }
     }
 })
 
@@ -105,14 +163,15 @@ app.get("/eliminazione-account", requireAuth , async (req,res)=>{
             if (err) {
                 console.log(err);
             } else {
-                return res.send("Account cancellato")        
+
+                return res.redirect("/logout")//#TODO        
             }
         });
 
     } catch (error) {
         return res.status(500).send('Cancellazione account non è andata a buon fine');
     }
-})
+});
 
 // Pagina protetta
 app.get('/dashboard', requireAuth, (req, res) => {
@@ -317,7 +376,9 @@ app.get("/auth/google",passport.authenticate("google",{
 //callback route for google to redirect to 
 //we have to puts passport middleware also hero to exchange code in the url for profile information
 app.get("/auth/google/redirect",passport.authenticate("google") ,(req,res)=>{
-    //req.session.authenticated=true;
+    
+    req.session.loggedin=true;//settato per accesso alle pagine protette
+    
     //res.send(req.user)// ci sarà l'id restituitoci da google
     res.cookie("logged",true)
     res.cookie("nameUser",req.user.name.givenName)//utilizzo dei cookie per inviare informazioni dal server al client
@@ -329,7 +390,7 @@ app.get("/auth/google/redirect",passport.authenticate("google") ,(req,res)=>{
 
 
 //middleware che in caso di utente non loggato con google lo redirecta sulla pagina di login 
-const authCheck =(req,res,next)=>{
+const authGoogleCheck =(req,res,next)=>{
     if(!req.user){//if user is not logged in 
         res.redirect("/sign-in");
     }else{
