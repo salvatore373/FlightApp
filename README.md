@@ -74,6 +74,9 @@ Deals: https://developers.amadeus.com/self-service/category/air/api-doc/flight-o
 
 https://www.streamlinehq.com/icons/streamline-mini-line
 
+### Airplane
+https://codepen.io/priteshchandra/pen/voZdgq
+
 ### Design Reference (Flat Design)
 
 https://designmodo.github.io/Flat-UI/

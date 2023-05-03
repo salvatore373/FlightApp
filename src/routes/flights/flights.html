@@ -115,7 +115,7 @@
                 <!-- Create one row for departure and one for back trip-->
                 <div v-for="it in item.flights" :key="it.id">
                     <div class="flight-container mb-3">
-                        <img class="airline-logo2" :src="it.airlineLogo">
+                        <img class="airline-logo2" :src="it.airlineLogo" alt="Logo of the airline">
 
                         <div class="d-flex flex-row">
                             <div class="container-section">
@@ -125,9 +125,9 @@
                             <div class="container-section" style="height: 100%;">
                                 <p class="duration">2h 15m</p>
                                 <img v-if="it.id === 0" class="airplane-arrow" src="/assets/icons/airplane.png"
-                                     style="transform: scaleX(-1);">
+                                     style="transform: scaleX(-1);" alt="Right Arrow">
                                 <img v-if="it.id === 1" class="airplane-arrow" src="/assets/icons/airplane.png"
-                                     style="transform: scaleX(1);">
+                                     style="transform: scaleX(1);" alt="Left Arrow">
                                 <p class="stopovers">
                                     +{{it.stopovers === 1 ? '1 scalo' : it.stopovers + ' scali'}}</p>
                             </div>
@@ -143,7 +143,7 @@
             <div class="container-section">
                 <p class="price-h">Prezzo totale:</p>
                 <p class="price">€{{item.price}}</p>
-                <button type="submit" class="primary-btn" onclick="goToBooking(this);" data-flightid="">Prenota
+                <button type="submit" class="primary-btn" onclick="goToBooking(this);" :data-flightid="item.id">Prenota
                 </button>
             </div>
         </div>

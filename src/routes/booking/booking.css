@@ -1,0 +1,84 @@
+.summary {
+    background: #9BE8BB;
+    width: 100vw;
+}
+
+.airline-name {
+    font-weight: 500;
+    font-size: 2vw;/*28px*/
+}
+
+.direction {
+    font-size: 0.86vw; /* 12px */
+    margin-bottom: 0;
+}
+
+.time {
+    font-size: 3.21vw; /*45px*/
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.city {
+    font-size: 2vw; /*28px*/
+    font-weight: 300;
+    margin-bottom: 0;
+    line-height: 95%;
+}
+
+.airport {
+    font-size: 1.29vw; /* 18px */
+    font-weight: 300;
+}
+
+.info-header {
+    font-size: 0.86vw; /* 12px */
+    font-weight: 800;
+    margin-bottom: 0;
+}
+
+.info-content {
+    font-size: 1.29vw; /* 18px */
+    font-weight: 300;
+}
+.info-container {
+    display: grid;
+    grid-template: auto / auto auto;
+    grid-gap: 4px;
+}
+
+@media screen and (min-width: 770px){
+    .summary {
+        width: 35vw;
+    }
+}
+@media screen and (max-width: 770px){
+    .summary > div {
+        justify-content: center;
+        align-items: center;
+    }
+}
+
+.primary-btn {
+    width: 100%;
+    text-align: center;
+
+    background-color: var(--primary-color);
+    color: var(--primary-light-color);
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+.primary-btn:hover {
+    background-color: var(--primary-color-hover);
+}
+
+.summary-separator {
+    height: 45px;
+    width: auto;
+
+    margin-top: 16px;
+    margin-bottom: 34px;
+}

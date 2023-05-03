@@ -1,4 +1,4 @@
-console.log(window.location.search)
+let vueContext;
 
 $(document).ready(() => {
     initForm();
@@ -12,74 +12,65 @@ $(document).ready(() => {
             };
         },
         methods: {
-            fetchResults() {
-                let exFlight1 = {
-                    'flights': [
-                        {
-                            'id':0,
-                            'dep': "FCO",
-                            'arr': "JFK",
-                            'depTime': "343",
-                            'arrTime': "234",
-                            "duration": '32',
-                            'stopovers': '2',
-                            'airlineLogo': 'https://picsum.photos/200/300',
-                        },
-                        {
-                            'id':1,
-                            'dep': "JFK",
-                            'arr': "FCO",
-                            'depTime': "888",
-                            'arrTime': "343",
-                            "duration": '32',
-                            'stopovers': '2',
-                            'airlineLogo': 'https://picsum.photos/200/300',
-                        }
-                    ],
-                    'price': 10
-                }
-                let exFlight2 = {
-                    'flights': [
-                        {
-                            'id':0,
-                            'dep': "FCOoo",
-                            'arr': "JFK",
-                            'depTime': "343",
-                            'arrTime': "234",
-                            "duration": '32',
-                            'stopovers': '2',
-                            'airlineLogo': 'https://picsum.photos/200/300',
-                        },
-                        {
-                            'id':1,
-                            'dep': "JFK",
-                            'arr': "FCOoo",
-                            'depTime': "234",
-                            'arrTime': "343",
-                            "duration": '32',
-                            'stopovers': '2',
-                            'airlineLogo': 'https://picsum.photos/200/300',
-                        }
-                    ],
-                    'price': 100
-                }
-                this.results = [exFlight1, exFlight2];
-
-                // TODO: make API request
-                // TODO: update isLoading and isError
+            async fetchResults() {
+                // Retrieve the flights via a request to this server
+                let url = new URL(window.location);
+                url.pathname = '/retrieveFlights';
+                url = url.toString();
+                $.getJSON(url)
+                    .done((res) => {
+                        this.results = res;
+                    })
+                    .fail((err) => {
+                        this.isError = true;
+                    })
+                    .always(() => {
+                        this.isLoading = false;
+                    });
             }
         },
         mounted() {
+            vueContext = this;
             this.fetchResults();
         }
     }).mount('#listContainer');
 });
 
-function displayFlight() {
-}
-
 function goToBooking(btn) {
-    let flightId = btn.attributes['data-flightid'].nodeValue
+    // When the user selects a flight the json representing the round trip must be saved in localStorage
+    // in selectedFlight before redirecting to the booking page
+    //  selectedFlight: [{}, {
+    //      "depCode": x,
+    //      "arrCode": x,
+    //      "airlineName": x,
+    //      "depTime": x,
+    //      "arrTime": x,
+    //      "duration": x,
+    //      "price": x,
+    //      "adults": x,
+    //      "children": x,
+    //      "stops": x,
+    //  }]
+    let flightIndex = parseInt(btn.attributes['data-flightid'].nodeValue);
+    let flights = vueContext.results[flightIndex];
 
+    let adults = parseInt(window.location.search.match(/(?<=adults=)[0-9]+/g)[0]);
+    let children = parseInt(window.location.search.match(/(?<=children=)[0-9]+/g)[0]);
+
+    // Rename some properties
+    for (let i = 0; i < flights.flights.length; i++) {
+        flights.flights[i].depCode = flights.flights[i].dep;
+        flights.flights[i].arrCode = flights.flights[i].arr;
+        flights.flights[i].stops = flights.flights[i].stopovers;
+        flights.flights[i].price = `€${flights.price}`;
+        delete flights.flights[i].dep;
+        delete flights.flights[i].arr;
+        delete flights.flights[i].stopovers;
+
+        flights.flights[i].adults = adults;
+        flights.flights[i].children = children;
+    }
+
+    localStorage.setItem('selectedFlight', JSON.stringify(flights.flights));
     window.location.href = '/booking';
 }

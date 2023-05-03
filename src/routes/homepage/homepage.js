@@ -59,12 +59,12 @@ function initForm() {
         e.preventDefault();
 
         const flightsPage = new URL('/flights', 'https://example.com');
-        flightsPage.searchParams.append('dep', dep.value.match(airportCodeRegex)[0]);
-        flightsPage.searchParams.append('arr', arr.value.match(airportCodeRegex)[0]);
-        flightsPage.searchParams.append('adults', adults.value);
-        flightsPage.searchParams.append('children', children.value);
-        flightsPage.searchParams.append("depDate", depDate.value);
-        flightsPage.searchParams.append('arrDate', onlyGo.checked ? 'none' : arrDate.value);
+        flightsPage.searchParams.append(flightAttributes.departureAirportCode, dep.value.match(airportCodeRegex)[0]);
+        flightsPage.searchParams.append(flightAttributes.arrivalAirportCode, arr.value.match(airportCodeRegex)[0]);
+        flightsPage.searchParams.append(flightAttributes.numAdults, adults.value);
+        flightsPage.searchParams.append(flightAttributes.numChildren, children.value);
+        flightsPage.searchParams.append(flightAttributes.departureDate, depDate.value);
+        flightsPage.searchParams.append(flightAttributes.arrivalDate, onlyGo.checked ? 'none' : arrDate.value);
 
         document.location.href = flightsPage.pathname + flightsPage.search
     });

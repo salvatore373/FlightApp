@@ -6,11 +6,13 @@ const session = require('express-session');
 const constants = require("./configuration");
 const {Client} = require('pg');
 const bcrypt = require('bcrypt');
-
-const routesDir = '/src/routes';
+const flightsRetriever = require('./src/utils/flightsRetriever');
 
 const passportSetup = require("./config/passport-setup")
 const passport = require("passport")
+
+const routesDir = '/src/routes';
+
 
 // middleware utilizzato per prendere i dati da form
 app.use(express.urlencoded({extended: false}))
@@ -25,7 +27,7 @@ app.use(session({
     secret: 'il-mio-segreto-segretissimo',
     resave: false,
     saveUninitialized: true,
-    cookie: {maxAge:30*60*1000,rolling:true}//cookie settati a 30 minuti e rolling a true fara si che la durata della sessione sara sempre rinnovata ad ogni richiesta
+    cookie: {maxAge: 30 * 60 * 1000, rolling: true}//cookie settati a 30 minuti e rolling a true fara si che la durata della sessione sara sempre rinnovata ad ogni richiesta
 }));
 
 const cookieParser = require("cookie-parser")
@@ -53,7 +55,7 @@ const requireAuth = (req, res, next) => {
 //METODI GET
 app.get("/", (req, res) => {
     //link per andare alla pagina del form
-    res.sendFile(`.${routesDir}/homepage/homepage.html`,{root: __dirname});
+    res.sendFile(`.${routesDir}/homepage/homepage.html`, {root: __dirname});
 });
 app.get("/api/sign-in", (req, res) => {
     res.sendFile('signin.html', {root: __dirname + "/src/routes/signin/"})
@@ -61,18 +63,27 @@ app.get("/api/sign-in", (req, res) => {
 app.get("/api/sign-up", (req, res) => {
     res.sendFile('signup.html', {root: __dirname + "/src/routes/signup/"})
 });
-app.get("/avvenuta-iscrizione",(req,res)=>{
+app.get("/avvenuta-iscrizione", (req, res) => {
     res.sendFile('avvenuta_iscrizione.html', {root: __dirname + "/src/routes/avvenuta_iscrizione/"})
 })
 app.get("/flights", (req, res) => {
-    res.sendFile(`.${routesDir}/flights/flights.html`,{root: __dirname});
+    res.sendFile(`.${routesDir}/flights/flights.html`, {root: __dirname});
 });
 app.get("/booking", (req, res) => {
-    res.sendFile(`.${routesDir}/booking/booking.html`,{root: __dirname});
+    res.sendFile(`.${routesDir}/booking/booking.html`, {root: __dirname});
 });
-app.get("/profile",(req,res)=>{
+app.get("/profile", (req, res) => {
     res.sendFile('profilePage.html', {root: __dirname + "/src/routes/profilePage/"})
 })
+app.get("/retrieveFlights", async (req, res) => {
+    try {
+        let flights = await flightsRetriever.retrieveFlights(req);
+        res.send(flights);
+    } catch (e) {
+        res.sendStatus(400);
+        res.send(e);
+    }
+});
 
 //endpoint che restituisce i biglietti prenotati dall'utente
 app.get("/biglietti-prenotati",async (req,res)=>{
@@ -152,13 +163,13 @@ app.get("/eliminazione-account-Google",requireAuth, async(req,res)=>{
 })
 
 //endpoint per gestione cancellazione account 
-app.get("/eliminazione-account", requireAuth , async (req,res)=>{
+app.get("/eliminazione-account", requireAuth, async (req, res) => {
     const email = req.session.user
     const query = 'DELETE FROM Credenziali WHERE email = $1';
     const values = [email];
     try {
         const resultQuery = await client.query(query, values);
-        
+
         req.session.destroy(err => {
             if (err) {
                 console.log(err);
@@ -180,7 +191,7 @@ app.get('/dashboard', requireAuth, (req, res) => {
 
 // Gestione del logout
 app.get('/logout', (req, res) => {
-    
+
     //to reset the right navbar when the client logged with google and press logout
     res.clearCookie("logged")
     res.clearCookie("nameUser");
@@ -212,15 +223,15 @@ app.post("/api/sign-up", (req, res) => {
 
     const {nome, cognome, username, email, password, conferma_password} = req.body
 
-    if(password != conferma_password){
-        return res.send({code:1003})
+    if (password != conferma_password) {
+        return res.send({code: 1003})
     }
 
     //controllo formato email
     const regex = /^[A-z0-9\.\+_-]+@[A-z0-9\._-]+\.[A-z]{2,6}$/;
     console.log(!regex.test(email))
-    if(!regex.test(email)){
-        return res.send({code:1000})
+    if (!regex.test(email)) {
+        return res.send({code: 1000})
     }
 
     if (password != conferma_password) {
@@ -237,10 +248,10 @@ app.post("/api/sign-up", (req, res) => {
                 if (err) {
 
                     if (err.constraint === 'credenziali_pkey') { // codice di errore per la violazione di un vincolo di primary key 
-                        return res.send({code:1001})
+                        return res.send({code: 1001})
                     }
-                    if(err.constraint === 'vincolo_username'){//vincolo dichiarato in questo modo nel DB 
-                        return res.send({code:1002})
+                    if (err.constraint === 'vincolo_username') {//vincolo dichiarato in questo modo nel DB
+                        return res.send({code: 1002})
                     }
                 } else {
                     req.session.loggedin = true;
@@ -258,7 +269,6 @@ app.post("/api/sign-up", (req, res) => {
 });
 
 
-
 //CODICI DI ERRORE /api/sign-in
 // "Error" -> errore
 // "Success" --> login andato a buon fine 
@@ -269,29 +279,29 @@ app.post("/api/sign-in", (req, res) => {
     const query = 'SELECT pass from Credenziali WHERE email = $1';
     const values = [email];
 
-    
+
     client.query(query, values, (err, resultQuery) => {
         if (err) {
             resultQuery.status(500).send('Error');
         }
 
-        if (resultQuery.rows[0] === undefined) return res.send({code:"Error"})
-        
+        if (resultQuery.rows[0] === undefined) return res.send({code: "Error"})
+
         bcrypt.compare(password, resultQuery.rows[0].pass, (err, result) => {
             if (err) {
-                return res.status(500).send({code:"Error"});
+                return res.status(500).send({code: "Error"});
             } else if (result == true) {
-                res.cookie("logged",true)
-                
+                res.cookie("logged", true)
+
                 req.session.loggedin = true;//vado a CREARE il campo loggedin all'interno di req.session e lo setto a true
                 req.session.user = email; //vado a CREARE il campo user all'interno di req.session e lo setto uguale alla mail
 
                 //res.redirect("/dashboard")
-                return res.send({code:"Success"}).status(200)
+                return res.send({code: "Success"}).status(200)
             } else {
-                return res.send({code:"Error"})
+                return res.send({code: "Error"})
             }
-        })    
+        })
     })
 });
 
@@ -301,13 +311,13 @@ app.post("/api/sign-in", (req, res) => {
 // 1001 --> old_password errata
 // success --> password aggiornata correttamente 
 
-app.post("/reset-password", requireAuth , async (req,res)=>{
+app.post("/reset-password", requireAuth, async (req, res) => {
     console.log(req.session)
     const email = req.session.user
-    const {old_pass, new_pass,conf_new_pass} = req.body
+    const {old_pass, new_pass, conf_new_pass} = req.body
     //gestione errore password diverse
-    if(new_pass !== conf_new_pass){
-        return res.send({code:1000}).status(200)
+    if (new_pass !== conf_new_pass) {
+        return res.send({code: 1000}).status(200)
     }
     const query = 'SELECT pass from Credenziali WHERE email = $1';
     const values = [email];
@@ -319,14 +329,14 @@ app.post("/reset-password", requireAuth , async (req,res)=>{
 
         if (result === true) {
             const saltRounds = 10
-            const new_pass_crypted = await bcrypt.hash(new_pass,saltRounds)
+            const new_pass_crypted = await bcrypt.hash(new_pass, saltRounds)
             const query1 = "UPDATE Credenziali SET pass = $1 WHERE email = $2";
-            const values1 = [new_pass_crypted,email]
-            const resultQuery1 = await client.query(query1,values1)
-            res.send({code:"success"})
+            const values1 = [new_pass_crypted, email]
+            const resultQuery1 = await client.query(query1, values1)
+            res.send({code: "success"})
             res.status(200);
         } else {
-            return res.send({code:1001}).status(200);
+            return res.send({code: 1001}).status(200);
         }
 
     } catch (error) {
@@ -338,39 +348,39 @@ app.post("/reset-password", requireAuth , async (req,res)=>{
 // success --> passato il controllo sulla password
 // 1000 --> passwords are not equal
 // 1001 --> wrong password after 
-app.post("/cancellazione-account", requireAuth ,async (req,res)=>{
-    
-    const {pass,conf_pass} = req.body
-    if(pass !== conf_pass ){
-        return res.send({error_code:1000}).status(200)
+app.post("/cancellazione-account", requireAuth, async (req, res) => {
+
+    const {pass, conf_pass} = req.body
+    if (pass !== conf_pass) {
+        return res.send({error_code: 1000}).status(200)
     } else {
-        
+
         const email = req.session.user
         const query = 'SELECT pass from Credenziali WHERE email = $1';
         const values = [email];
 
-    try {
-        const resultQuery = await client.query(query, values);
+        try {
+            const resultQuery = await client.query(query, values);
 
-        const result = await bcrypt.compare(pass, resultQuery.rows[0].pass);
+            const result = await bcrypt.compare(pass, resultQuery.rows[0].pass);
 
-        if (result === true) {
-            return res.send({error_code:"success"}).status(200)
-            
-        } else {
-            return res.send({error_code:1001}).status(200);
+            if (result === true) {
+                return res.send({error_code: "success"}).status(200)
+
+            } else {
+                return res.send({error_code: 1001}).status(200);
+            }
+
+        } catch (error) {
+            res.status(500).send('Error');
         }
-
-    } catch (error) {
-        res.status(500).send('Error');
-    }   
     }
 })
 
 
 //auth with google
-app.get("/auth/google",passport.authenticate("google",{
-    scope:["profile","email"] // the user have to puts the profile informations 
+app.get("/auth/google", passport.authenticate("google", {
+    scope: ["profile", "email"] // the user have to puts the profile informations
 }));
 
 //callback route for google to redirect to 
@@ -380,9 +390,9 @@ app.get("/auth/google/redirect",passport.authenticate("google") ,(req,res)=>{
     req.session.loggedin=true;//settato per accesso alle pagine protette
     
     //res.send(req.user)// ci sarà l'id restituitoci da google
-    res.cookie("logged",true)
-    res.cookie("nameUser",req.user.name.givenName)//utilizzo dei cookie per inviare informazioni dal server al client
-    res.cookie("photoUser",req.user.photos[0].value)
+    res.cookie("logged", true)
+    res.cookie("nameUser", req.user.name.givenName)//utilizzo dei cookie per inviare informazioni dal server al client
+    res.cookie("photoUser", req.user.photos[0].value)
 
     res.redirect("/")
 })
@@ -393,7 +403,7 @@ app.get("/auth/google/redirect",passport.authenticate("google") ,(req,res)=>{
 const authGoogleCheck =(req,res,next)=>{
     if(!req.user){//if user is not logged in 
         res.redirect("/sign-in");
-    }else{
+    } else {
         next();
     }
 }

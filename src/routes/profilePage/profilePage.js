@@ -129,55 +129,99 @@ $(document).ready(function() {
   });
 
 
-$(document).ready(function() {
-  $('#list-biglietti-list').click(function(event) {
-    event.preventDefault();
-    $.ajax({
-      url: '/biglietti-prenotati/',
-      type: 'GET',
-      success: function(response) {
-        var carouselInner = $('#carousel-biglietti .carousel-inner');
-        var carouselIndicators = $('#carousel-biglietti .carousel-indicators');
-
-
-        for (var i = 0; i < response.length; i++) {
-          var item = response[i];
-          var active = i === 0 ? 'active' : '';
-
-          //gestione degli stili css dell'elemento aggiunto
-          var new_div = document.createElement("div");
-          new_div.classList.add("carousel-item");
-          new_div.style.display = "inline-block";
-          new_div.style.position = "relative"
-          new_div.style.width = "33%"
-          new_div.style.top = "0"
-          new_div.style.left = 33 * (i%3) + "%"
-
-          carouselIndicators.append('<button type="button" data-bs-target="#carousel-biglietti" data-bs-slide-to="' + i + '" class="' + active + '"></button>');
-          carouselInner.append(new_div);
-
-          var iframe = document.createElement("iframe");
-          iframe.src = '/src/routes/common/biglietto.html';
-          new_div.appendChild(iframe);
-
-          iframe.addEventListener("load", function() {
+  $(document).ready(function() {
+    $('#list-biglietti-list').click(function(event) {
+      event.preventDefault();
+      $.ajax({
+        url: '/biglietti-prenotati/',
+        type: 'GET',
+        success: function(response) {
+          var carouselInner = $('#carousel-biglietti .carousel-inner');
+          var carouselIndicators = $('#carousel-biglietti .carousel-indicators');
+          
+          // calcola il numero di biglietti per slide
+          var itemsPerSlide = 3;
+          // calcola il numero di slide necessarie
+          var numSlides = Math.ceil(response.length / itemsPerSlide);
+          console.log(numSlides)
+  
+          // inizializza l'indice corrente del carosello
+          var currentSlide = 0;
+  
+          for (var i = 0; i < numSlides; i++) {
+            // crea un nuovo elemento per ogni slide
+            var newSlide = $('<div class="carousel-item"></div>');
             
-            var iframeContent = iframe.contentDocument;
-            
-            var flightCode = iframeContent.querySelector("#flightCode");
-            flightCode.innerHTML = "<span>Flight</span>"+item.id;
-            
-            var owner = iframeContent.querySelector("#owner");
-            owner.innerHTML = "<span>Passenger</span>" + item.nome + " " + item.cognome
-          });
+            newSlide.css({
+              'display':'inline-block'
+            })
+
+            // aggiungi gli indicatori di slide
+            var active = i === 0 ? 'active' : '';
+            carouselIndicators.append('<button type="button" data-bs-target="#carousel-biglietti" data-bs-slide-to="' + i + '" class="' + active + '"></button>');
+  
+            // aggiungi gli elementi alla slide corrente
+            for (var j = 0; j < itemsPerSlide; j++) {
+              var index = (i * itemsPerSlide) + j;
+              if (index >= response.length) {
+                break;
+              }
+  
+              // crea un nuovo elemento per ogni biglietto
+              var newDiv = $('<div class="carousel-item"></div>');
+              newDiv.css({
+                'display': 'inline-block',
+                'position': 'relative',
+                'width': '33%',
+                'top': '0',
+                'left': 33 * j + '%'
+              });
+  
+              // crea un nuovo iframe per ogni biglietto
+              var iframe = $('<iframe src="/src/routes/common/biglietto.html"></iframe>');
+              var item = response[index]
+              
+              // aggiungi l'iframe al nuovo elemento
+              newDiv.append(iframe);
+
+              (function(item,iframe){
+                iframe.on("load",()=>{
+                  var iframeContent = iframe.contents();
+                  iframeContent.find('#flightCode').html('<span>Flight</span>' + item.id);
+                  iframeContent.find('#owner').html('<span>Passenger</span>' + item.nome + ' ' + item.cognome);
+                })
+              })(item,iframe);
+
+
+/*
+              iframe.on('load', (function(item) {
+                return function() {
+                  var iframeContent = iframe.contents();
+                  iframeContent.find('#flightCode').html('<span>Flight</span>' + item.id);
+                  iframeContent.find('#owner').html('<span>Passenger</span>' + item.nome + ' ' + item.cognome);
+                };
+              })(item));
+  */
+              // aggiungi il nuovo elemento alla slide corrente
+              newSlide.append(newDiv);
+            }
+  
+            // aggiungi la nuova slide al carosello
+            carouselInner.append(newSlide);
+          }
+  
+          // aggiungi i pulsanti di controllo
+          $('#carousel-biglietti').append('<button class="carousel-control-prev" type="button" data-bs-target="#carousel-biglietti" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>');
+          $('#carousel-biglietti').append('<button class="carousel-control-next" type="button" data-bs-target="#carousel-biglietti" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>');
+         
+        },
+        error: function(xhr, status, error) {
+      
         }
-      },
-      error: function(xhr, status, error) {
-        console.log("error")
-      }
+      });
     });
   });
-});
+
 
 
 //controllo password delete account 
