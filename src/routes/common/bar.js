@@ -40,7 +40,7 @@ function loadBar() {
             // Set the User's name and profile image
             document.getElementById('profileImage').src =
                 decodeURIComponent(getCookieValue('photoUser'));
-            document.getElementById('username').textContent = nameValue;
+            document.getElementById('user-name').textContent = nameValue;
 
             adaptToAuthentication();
         });
