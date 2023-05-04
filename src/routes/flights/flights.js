@@ -71,6 +71,12 @@ function goToBooking(btn) {
         flights.flights[i].children = children;
     }
 
+    // Save the dates in the object
+    flights.flights[0].date = window.location.search.match(/(?<=depDate=)[0-9]{4}-[0-9]{2}-[0-9]{2}/g)[0];
+    if (flights.flights.length > 1) {
+        flights.flights[1].date = window.location.search.match(/(?<=arrDate=)[0-9]{4}-[0-9]{2}-[0-9]{2}/g)[0];
+    }
+
     localStorage.setItem('selectedFlight', JSON.stringify(flights.flights));
     window.location.href = '/booking';
 }

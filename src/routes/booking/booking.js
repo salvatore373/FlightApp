@@ -1,5 +1,6 @@
 console.log(window.location.search) // DEBUG
 let airports = null;
+let vueContext;
 
 $(document).ready(() => {
     Vue.createApp({
@@ -7,7 +8,7 @@ $(document).ready(() => {
             return {
                 isLoading: false, // TODO: set to true // Whether we are executing the request to retrieve results TODO: implement
                 isError: false, // Whether the API to retrieve results returned an error TODO: implement
-                flight: {}, // The flights selected by the user in the flights page
+                flight: {}, // The flight selected by the user in the flights page
                 zones: [], // The data about the departure and the arrival airports
                 additionalInfo: [], // Some information about the flight, in the form Header-Content
                 wayBackToConfirm: true, // Whether the user has to confirm the back trip or not
@@ -43,7 +44,7 @@ $(document).ready(() => {
                 getAdditionalInfo(f, this);
                 this.isLoading = false;
 
-                localStorage.setItem('selectedFlight', JSON.stringify(flights.slice(1)));
+                // TODO: remove comment localStorage.setItem('selectedFlight', JSON.stringify(flights.slice(1)));
             }
         },
         mounted() {
@@ -64,10 +65,9 @@ $(document).ready(() => {
                 }]
             ));*/
 
+            vueContext = this;
             this.fetchResults();
             initializeSeats(this);
-
-            // TODO: check that the right number of seats has been selected, otherwise raise alert
         }
     }).mount('#globalContainer');
 })
@@ -175,5 +175,28 @@ function selectSeat(btn, context) {
 
         btn.classList = 'seat-selected';
         context.selectedSeats.push(btn.textContent);
+    }
+}
+
+function confirmBooking() {
+    // Check that the right number of seats has been selected, otherwise raise alert
+    if (vueContext.selectedSeats.length < vueContext.flight.adults + vueContext.flight.children) {
+        // The modal is shown
+        return;
+    }
+
+    // Save this ticket in the database
+    for(let i = 0; i < vueContext.selectedSeats.length; i++) {
+        let f = Object.assign({}, vueContext.flight);
+        f.seat = vueContext.selectedSeats[i];
+
+        $.ajax({
+            type: 'POST',
+            url: '/save-ticket',
+            data: f,
+            error: function (data) {
+                // TODO: show error?
+            }
+        });
     }
 }
