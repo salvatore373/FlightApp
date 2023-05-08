@@ -77,3 +77,8 @@ body, html {
       margin:10px 0;
       padding: 10px;
     }
+
+    #show-password-button {
+      background-color:var(--secondary-color);
+      border-radius: 5px;
+    }

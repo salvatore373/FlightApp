@@ -94,7 +94,7 @@ app.get("/biglietti-prenotati", async (req, res) => {
     if (!req.user) {
         email = req.session.user
         userIsIn = "credenziali"
-    } else { //tente si è loggato tramite Google OAuth2
+    } else { //utente si è loggato tramite Google OAuth2
         email = req.user.email
         userIsIn = "googleusers"
     }

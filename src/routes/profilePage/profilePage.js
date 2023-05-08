@@ -1,4 +1,26 @@
 
+function hideErrorMessage(){
+    
+  const old_pass = document.getElementById("inputOldPassword")
+  old_pass.addEventListener("input",()=>{
+      document.getElementById("error-message").style.display = "none"
+      document.getElementById("success-message").style.display = "none"
+  })
+
+  const new_pass = document.getElementById("inputNewPassword")
+  new_pass.addEventListener("input",()=>{
+      document.getElementById("error-message").style.display = "none"
+      document.getElementById("success-message").style.display = "none"
+  })
+
+  const conf_pass = document.getElementById("inputConfirmPassword")
+  conf_pass.addEventListener("input", ()=>{
+      document.getElementById("error-message").style.display = "none"
+      document.getElementById("success-message").style.display = "none"
+  })
+
+}
+
 function getCookieValue(cookieName) {
   const cookieString = document.cookie;
   const cookies = cookieString.split(';');
@@ -43,8 +65,73 @@ document.addEventListener("DOMContentLoaded", ()=>{
   
 })
 
+// Chiamata ajax subito dopo il caricamento della pagina 
+// (Informazioni personali è la section attiva subito dopo il caricamento della pagina)
+$(document).ready(function() {
+  $.ajax({
+      url: '/get-personal-info/',
+      type: 'GET',
+      success: function(data) {
+          //tolgo l'attributo readonly dei campi input
+          $("#nome-form").removeAttr("readonly")
+          $("#cognome-form").removeAttr("readonly")
+          $("#email-form").removeAttr("readonly")
+          $("#username-form").removeAttr("readonly")
+
+          //modifico i value dei campi input
+          $("#nome-form").val(data.nome)
+          $("#cognome-form").val(data.cognome)
+          $("#email-form").val(data.email)
+          $("#username-form").val(data.username)
+
+          //risetto l'attributo readonly dei campi input
+          $("#nome-form").attr("readonly",true);
+          $("#cognome-form").attr("readonly",true);
+          $("#email-form").attr("readonly",true);
+          $("#username-form").attr("readonly",true);
+      },
+      error: function(xhr, status, error) {
+          console.log("error")
+      }
+  });
+});
+
+//chiamata ajax al click del button Informazioni Personali
+$(document).ready(function() {
+  $('#button-info').click(function(event) {
+    event.preventDefault();
+    $.ajax({
+      url: '/get-personal-info/',
+      type: 'GET',
+      success: function(data) {
+          //tolgo l'attributo readonly dei campi input
+          $("#nome-form").removeAttr("readonly")
+          $("#cognome-form").removeAttr("readonly")
+          $("#email-form").removeAttr("readonly")
+          $("#username-form").removeAttr("readonly")
+
+          //modifico i value dei campi input
+          $("#nome-form").val(data.nome)
+          $("#cognome-form").val(data.cognome)
+          $("#email-form").val(data.email)
+          $("#username-form").val(data.username)
+
+          //risetto l'attributo readonly dei campi input
+          $("#nome-form").attr("readonly",true);
+          $("#cognome-form").attr("readonly",true);
+          $("#email-form").attr("readonly",true);
+          $("#username-form").attr("readonly",true);
+      },
+      error: function(xhr, status, error) {
+          console.log("error")
+      }
+    });
+  });
+});
 
 
+
+//chiamata ajax al click del button Reset Password
 $(document).ready(function() {
     $('#resetPassword').submit(function(event) {
       event.preventDefault();
@@ -73,62 +160,7 @@ $(document).ready(function() {
     });
   });
 
-  function hideErrorMessage(){
-    
-    const old_pass = document.getElementById("inputOldPassword")
-    old_pass.addEventListener("input",()=>{
-        document.getElementById("error-message").style.display = "none"
-        document.getElementById("success-message").style.display = "none"
-    })
-
-    const new_pass = document.getElementById("inputNewPassword")
-    new_pass.addEventListener("input",()=>{
-        document.getElementById("error-message").style.display = "none"
-        document.getElementById("success-message").style.display = "none"
-    })
-
-    const conf_pass = document.getElementById("inputConfirmPassword")
-    conf_pass.addEventListener("input", ()=>{
-        document.getElementById("error-message").style.display = "none"
-        document.getElementById("success-message").style.display = "none"
-    })
-
-}
-
-
-$(document).ready(function() {
-    $('#button-info').click(function(event) {
-      event.preventDefault();
-      $.ajax({
-        url: '/get-personal-info/',
-        type: 'GET',
-        success: function(data) {
-            //tolgo l'attributo readonly dei campi input
-            $("#nome-form").removeAttr("readonly")
-            $("#cognome-form").removeAttr("readonly")
-            $("#email-form").removeAttr("readonly")
-            $("#username-form").removeAttr("readonly")
-
-            //modifico i value dei campi input
-            $("#nome-form").val(data.nome)
-            $("#cognome-form").val(data.cognome)
-            $("#email-form").val(data.email)
-            $("#username-form").val(data.username)
-
-            //risetto l'attributo readonly dei campi input
-            $("#nome-form").attr("readonly",true);
-            $("#cognome-form").attr("readonly",true);
-            $("#email-form").attr("readonly",true);
-            $("#username-form").attr("readonly",true);
-        },
-        error: function(xhr, status, error) {
-            console.log("error")
-        }
-      });
-    });
-  });
-
-
+//chiamata ajax al click del button Biglietti Prenotati
 $(document).ready(function() {
   var carousel = $('#carouselBiglietti');
 
@@ -158,8 +190,14 @@ $(document).ready(function() {
           // carica i dati del biglietto nell'iframe
           iframe.on("load", function() {
             var iframeContent = iframe.contents();
+            console.log(item)
             iframeContent.find('#flightCode').html('<span>Flight</span>' + item.id);
             iframeContent.find('#owner').html('<span>Passenger</span>' + item.nome + ' ' + item.cognome);
+            iframeContent.find('#seat').html('<span>Seat</span>' + item.postonumero);
+            iframeContent.find('#cityFrom').html(item.cittapartenza);
+            iframeContent.find('#toCity').html(item.cittaarrivo);
+            iframeContent.find('#departs').html('<span>Departs</span>' + item.orapartenza);
+            iframeContent.find('#arrives').html('<span>Arrives</span>' + item.oraarrivo);
           });
 
           carousel.append(iframe);
@@ -199,11 +237,7 @@ $(document).ready(function() {
   });
 });
 
-
-
-
-
-//controllo password delete account 
+//chiamata ajax per controllo password per il delete account 
 $(document).ready(function() {
   $('#cancellazioneAccount').submit(function(event) {
     event.preventDefault();
@@ -233,3 +267,4 @@ $(document).ready(function() {
     });
   });
 });
+
