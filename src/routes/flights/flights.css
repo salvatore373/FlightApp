@@ -21,20 +21,6 @@ body {
     min-width: 708px;
 }
 
-.primary-btn {
-    background-color: var(--primary-color);
-    color: var(--primary-light-color);
-    border: none;
-    border-radius: 5px;
-    padding: 10px 20px;
-    cursor: pointer;
-    transition: background-color 0.2s ease;
-}
-
-.primary-btn:hover {
-    background-color: var(--primary-color-hover);
-}
-
 .flight-card2 {
     width: 60vw;
     min-width: 424px;

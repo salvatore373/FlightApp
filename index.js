@@ -405,8 +405,8 @@ app.post('/save-ticket', (req, res) => {
     let flight = req.body;
 
     let email = req.session.user ? req.session.user : req.user.email
-    const query = 'INSERT INTO Biglietti (id, email, data, codicePartenza, codiceArrivo, durata, oraPartenza, oraArrivo, nomeCompagnia, postoNumero) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)';
-    const values = [Date.now(), email, flight.date, flight.depCode, flight.arrCode, flight.duration, flight.depTime, flight.arrTime, flight.airlineName, flight.seat];
+    const query = 'INSERT INTO Biglietti (id, email, data, codicePartenza, codiceArrivo, durata, oraPartenza, oraArrivo, nomeCompagnia, postoNumero, cittapartenza, cittaarrivo) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)';
+    const values = [Date.now(), email, flight.date, flight.depCode, flight.arrCode, flight.duration, flight.depTime, flight.arrTime, flight.airlineName, flight.seat, flight.depCity, flight.arrCity];
 
     client.query(query, values, (err, result) => {
         if (err) {
