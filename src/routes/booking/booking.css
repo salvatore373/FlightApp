@@ -1,58 +1,72 @@
 .summary {
-    background: #9BE8BB;
-    width: 100vw;
+    background: rgba(155, 232, 187, 0.41);
+    width: 95vw;
+
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
+}
+
+.summary-container {
+    margin-left: 16px;
+    margin-right: 16px;
+}
+
+div > .summary {
+    padding: 8px;
 }
 
 .airline-name {
     font-weight: 500;
-    font-size: 2vw;/*28px*/
+    font-size: /* 2vw; */ 28px;
 }
 
 .direction {
-    font-size: 0.86vw; /* 12px */
+    font-size: /* 0.86vw; */ 12px;
     margin-bottom: 0;
 }
 
 .time {
-    font-size: 3.21vw; /*45px*/
+    font-size: /* 3.21vw; */ 45px;
     font-weight: 700;
     margin-bottom: 2px;
 }
 
 .city {
-    font-size: 2vw; /*28px*/
+    font-size: /* 2vw; */ 28px;
     font-weight: 300;
     margin-bottom: 0;
     line-height: 95%;
 }
 
 .airport {
-    font-size: 1.29vw; /* 18px */
+    font-size: /* 1.29vw; */ 18px;
     font-weight: 300;
 }
 
 .info-header {
-    font-size: 0.86vw; /* 12px */
+    font-size: /* 0.86vw; */ 12px;
     font-weight: 800;
     margin-bottom: 0;
 }
 
 .info-content {
-    font-size: 1.29vw; /* 18px */
+    font-size: /* 1.29vw; */ 18px;
     font-weight: 300;
 }
+
 .info-container {
     display: grid;
     grid-template: auto / auto auto;
     grid-gap: 4px;
 }
 
-@media screen and (min-width: 770px){
+@media screen and (min-width: 770px) {
     .summary {
-        width: 35vw;
+        width: 40vw;
     }
 }
-@media screen and (max-width: 770px){
+
+@media screen and (max-width: 770px) {
     .summary > div {
         justify-content: center;
         align-items: center;

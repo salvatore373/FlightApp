@@ -17,6 +17,13 @@
     align-content: center;
 }*/
 
+#listContainer {
+    display: grid;
+    justify-content: center;
+
+    margin-top: 16px;
+}
+
 body {
     min-width: 708px;
 }
@@ -24,7 +31,10 @@ body {
 .flight-card2 {
     width: 60vw;
     min-width: 424px;
-    background-color: #FAF9EC;
+    background-color: var(--primary-light-color);
+
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    border-radius: 20px;
 
     /*max-width: ; TODO:*/
 }
