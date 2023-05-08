@@ -129,98 +129,77 @@ $(document).ready(function() {
   });
 
 
-  $(document).ready(function() {
-    $('#list-biglietti-list').click(function(event) {
-      event.preventDefault();
-      $.ajax({
-        url: '/biglietti-prenotati/',
-        type: 'GET',
-        success: function(response) {
-          var carouselInner = $('#carousel-biglietti .carousel-inner');
-          var carouselIndicators = $('#carousel-biglietti .carousel-indicators');
-          
-          // calcola il numero di biglietti per slide
-          var itemsPerSlide = 3;
-          // calcola il numero di slide necessarie
-          var numSlides = Math.ceil(response.length / itemsPerSlide);
-          console.log(numSlides)
-  
-          // inizializza l'indice corrente del carosello
-          var currentSlide = 0;
-  
-          for (var i = 0; i < numSlides; i++) {
-            // crea un nuovo elemento per ogni slide
-            var newSlide = $('<div class="carousel-item"></div>');
-            
-            newSlide.css({
-              'display':'inline-block'
-            })
+$(document).ready(function() {
+  var carousel = $('#carouselBiglietti');
 
-            // aggiungi gli indicatori di slide
-            var active = i === 0 ? 'active' : '';
-            carouselIndicators.append('<button type="button" data-bs-target="#carousel-biglietti" data-bs-slide-to="' + i + '" class="' + active + '"></button>');
-  
-            // aggiungi gli elementi alla slide corrente
-            for (var j = 0; j < itemsPerSlide; j++) {
-              var index = (i * itemsPerSlide) + j;
-              if (index >= response.length) {
-                break;
-              }
-  
-              // crea un nuovo elemento per ogni biglietto
-              var newDiv = $('<div class="carousel-item"></div>');
-              newDiv.css({
-                'display': 'inline-block',
-                'position': 'relative',
-                'width': '33%',
-                'top': '0',
-                'left': 33 * j + '%'
-              });
-  
-              // crea un nuovo iframe per ogni biglietto
-              var iframe = $('<iframe src="/src/routes/common/biglietto.html"></iframe>');
-              var item = response[index]
-              
-              // aggiungi l'iframe al nuovo elemento
-              newDiv.append(iframe);
+  $('#list-biglietti-list').click(function(event) {
+    event.preventDefault();
+    $.ajax({
+      url: '/biglietti-prenotati/',
+      type: 'GET',
+      success: function(response) {
 
-              (function(item,iframe){
-                iframe.on("load",()=>{
-                  var iframeContent = iframe.contents();
-                  iframeContent.find('#flightCode').html('<span>Flight</span>' + item.id);
-                  iframeContent.find('#owner').html('<span>Passenger</span>' + item.nome + ' ' + item.cognome);
-                })
-              })(item,iframe);
-
-
-/*
-              iframe.on('load', (function(item) {
-                return function() {
-                  var iframeContent = iframe.contents();
-                  iframeContent.find('#flightCode').html('<span>Flight</span>' + item.id);
-                  iframeContent.find('#owner').html('<span>Passenger</span>' + item.nome + ' ' + item.cognome);
-                };
-              })(item));
-  */
-              // aggiungi il nuovo elemento alla slide corrente
-              newSlide.append(newDiv);
-            }
-  
-            // aggiungi la nuova slide al carosello
-            carouselInner.append(newSlide);
-          }
-  
-          // aggiungi i pulsanti di controllo
-          $('#carousel-biglietti').append('<button class="carousel-control-prev" type="button" data-bs-target="#carousel-biglietti" data-bs-slide="prev"><span class="carousel-control-prev-icon" aria-hidden="true"></span><span class="visually-hidden">Previous</span></button>');
-          $('#carousel-biglietti').append('<button class="carousel-control-next" type="button" data-bs-target="#carousel-biglietti" data-bs-slide="next"><span class="carousel-control-next-icon" aria-hidden="true"></span><span class="visually-hidden">Next</span></button>');
+        // svuota il carosello
+        carousel.empty();
          
-        },
-        error: function(xhr, status, error) {
-      
+        if(response.length == 0){
+          console.log("zero Biglietti")
+          $("#casoZeroBiglietti").text("Non hai acquistato nessun biglietto")
+        }else{
+          //Nascondo il messaggio del caso di zero biglietti
+          $("#casoZeroBiglietti").hide()
+
+          // crea una slide per ogni biglietto
+          response.forEach(function(item) {
+         
+          // crea un nuovo iframe per ogni biglietto
+          var iframe = $('<iframe src="/src/routes/common/biglietto.html"></iframe>');
+
+          // carica i dati del biglietto nell'iframe
+          iframe.on("load", function() {
+            var iframeContent = iframe.contents();
+            iframeContent.find('#flightCode').html('<span>Flight</span>' + item.id);
+            iframeContent.find('#owner').html('<span>Passenger</span>' + item.nome + ' ' + item.cognome);
+          });
+
+          carousel.append(iframe);
+        });
+
+          // distrugge il carosello precedente
+          carousel.trigger('destroy.owl.carousel');
+
+          // inizializza il carosello con Owl Carousel
+          carousel.owlCarousel({
+            loop: false,
+            margin: 30,
+            nav: true,
+            navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+            dots: true,
+            responsive:{
+              0:{
+                items:1
+              },
+              600:{
+                items:2
+              },
+              1000:{
+                items:3
+              }
+            }
+          });
+        
+          // rimuove la classe owl-hidden dal tag del carosello
+          carousel.removeClass('owl-hidden');
         }
-      });
+      },
+      error: function(xhr, status, error) {
+        // gestione dell'errore
+      }
     });
   });
+});
+
+
 
 
 
