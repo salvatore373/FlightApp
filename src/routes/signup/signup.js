@@ -44,6 +44,7 @@ $(document).ready(function() {
             
             if(data.code === undefined){
                 localStorage.setItem('authenticated', 'true');//salvataggio lato client dello stato di autenticazione 
+                localStorage.setItem('nameUser', username);
                 window.location.href = "/avvenuta-iscrizione";
             }
         },

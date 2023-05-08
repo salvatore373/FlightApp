@@ -279,7 +279,7 @@ app.post("/api/sign-in", (req, res) => {
 
     const {email, password} = req.body
 
-    const query = 'SELECT pass from Credenziali WHERE email = $1';
+    const query = 'SELECT pass, nome from Credenziali WHERE email = $1';
     const values = [email];
 
 
@@ -300,7 +300,7 @@ app.post("/api/sign-in", (req, res) => {
                 req.session.user = email; //vado a CREARE il campo user all'interno di req.session e lo setto uguale alla mail
 
                 //res.redirect("/dashboard")
-                return res.send({code: "Success"}).status(200)
+                return res.send({code: "Success", username: resultQuery.rows[0].nome}).status(200)
             } else {
                 return res.send({code: "Error"})
             }

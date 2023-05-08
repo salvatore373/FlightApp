@@ -38,9 +38,12 @@ function loadBar() {
             container.innerHTML = res;
 
             // Set the User's name and profile image
-            document.getElementById('profileImage').src =
-                decodeURIComponent(getCookieValue('photoUser'));
-            document.getElementById('user-name').textContent = nameValue;
+            let imgSrc = decodeURIComponent(getCookieValue('photoUser'));
+            if(imgSrc === 'null') imgSrc = '/assets/icons/user.png';
+            document.getElementById('profileImage').src = imgSrc;
+            let name = nameValue;
+            if(nameValue === null) name = localStorage.getItem('nameUser');
+            document.getElementById('user-name').textContent = name;
 
             adaptToAuthentication();
         });

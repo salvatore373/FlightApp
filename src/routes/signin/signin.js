@@ -41,6 +41,7 @@ $(document).ready(function() {
             if(data.code == "Success"){
                 localStorage.setItem("email", email)
                 localStorage.setItem('authenticated', 'true');
+                localStorage.setItem('nameUser', data.username);
                 setTimeout(()=>{
                     localStorage.setItem('authenticated', 'false')//dopo 10 minuti viene risettata a false
                 },600000);
