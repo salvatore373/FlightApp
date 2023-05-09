@@ -413,7 +413,8 @@ app.post('/save-ticket', (req, res) => {
             res.status(400);
             res.send(err);
         } else {
-            res.status(200)
+            res.status(200);
+            res.send('success');
         }
     })
 })

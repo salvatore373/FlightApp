@@ -14,6 +14,7 @@ $(document).ready(() => {
                 wayBackToConfirm: true, // Whether the user has to confirm the back trip or not
                 selectedSeats: [], // The seats selected by the user from the cabin map
                 numberOfSeatRows: 22, // The total number of seats in the cabin
+                ticketsSaveModalMsg: 'Prenotazione in corso...', // The message to display in the ticketsSaveModal
             };
         },
         methods: {
@@ -178,6 +179,18 @@ function selectSeat(btn, context) {
     }
 }
 
+function saveTicketOnDb(flight) {
+    return new Promise((resolve, reject) => {
+        $.ajax({
+            type: 'POST',
+            url: '/save-ticket',
+            data: flight,
+            success: resolve,
+            error: reject,
+        });
+    });
+}
+
 function confirmBooking() {
     // Check that the right number of seats has been selected, otherwise raise alert
     if (vueContext.selectedSeats.length < vueContext.flight.adults + vueContext.flight.children) {
@@ -185,18 +198,28 @@ function confirmBooking() {
         return;
     }
 
+    // Show the modal for the saving process progress
+    let modal = new bootstrap.Modal($('#ticketsSaveModal'), {
+        keyboard: false,
+        backdrop: 'static',
+    });
+    modal.show();
+
     // Save this ticket in the database
-    for(let i = 0; i < vueContext.selectedSeats.length; i++) {
+    let requests = [];
+    for (let i = 0; i < vueContext.selectedSeats.length; i++) {
         let f = Object.assign({}, vueContext.flight);
         f.seat = vueContext.selectedSeats[i];
 
-        $.ajax({
-            type: 'POST',
-            url: '/save-ticket',
-            data: f,
-            error: function (data) {
-                // TODO: show error?
-            }
-        });
+        requests.push(saveTicketOnDb(f));
     }
+
+    // Update the message when the requests are completed
+    Promise.all(requests)
+        .then(() => {
+            vueContext.ticketsSaveModalMsg = 'La prenotazione è stata effettuata con successo.'
+        })
+        .catch(() => {
+            vueContext.ticketsSaveModalMsg = 'Si è verificato un errore durante la prenotazione.'
+        });
 }
