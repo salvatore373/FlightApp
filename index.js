@@ -72,6 +72,9 @@ app.get("/flights", (req, res) => {
 app.get("/booking", (req, res) => {
     res.sendFile(`.${routesDir}/booking/booking.html`, {root: __dirname});
 });
+app.get("/tracker", (req, res) => {
+    res.sendFile(`.${routesDir}/tracker/tracker.html`, {root: __dirname});
+});
 app.get("/profile", (req, res) => {
     res.sendFile('profilePage.html', {root: __dirname + "/src/routes/profilePage/"})
 })
