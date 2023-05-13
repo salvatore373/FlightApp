@@ -178,6 +178,7 @@ $(document).ready(function() {
           console.log("zero Biglietti")
           $("#casoZeroBiglietti").text("Non hai acquistato nessun biglietto")
         }else{
+          console.log(response.length)
           //Nascondo il messaggio del caso di zero biglietti
           $("#casoZeroBiglietti").hide()
 
@@ -192,12 +193,17 @@ $(document).ready(function() {
             var iframeContent = iframe.contents();
             console.log(item)
             iframeContent.find('#flightCode').html('<span>Flight</span>' + item.id);
-            iframeContent.find('#owner').html('<span>Passenger</span>' + item.nome + ' ' + item.cognome);
+            iframeContent.find('#passenger').html('<span>Passenger</span>' + item.nome + ' ' + item.cognome);
             iframeContent.find('#seat').html('<span>Seat</span>' + item.postonumero);
+            iframeContent.find('#from').html(item.codicepartenza);
+            iframeContent.find('#to').html(item.codicearrivo);
             iframeContent.find('#cityFrom').html(item.cittapartenza);
             iframeContent.find('#toCity').html(item.cittaarrivo);
             iframeContent.find('#departs').html('<span>Departs</span>' + item.orapartenza);
             iframeContent.find('#arrives').html('<span>Arrives</span>' + item.oraarrivo);
+            iframeContent.find('#date').html('<span>Date</span>' + item.data);
+            iframeContent.find('#duration').html('<span>Duration</span>' + item.durata);
+            iframeContent.find('#company').html("<h1>"+ item.nomecompagnia+" Ticket</h1>");
           });
 
           carousel.append(iframe);

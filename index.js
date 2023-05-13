@@ -48,7 +48,8 @@ const requireAuth = (req, res, next) => {
     if (req.session.loggedin) {
         next();
     } else {
-        res.redirect('/api/sign-in');
+
+        res.redirect('/logout');
     }
 };
 
@@ -66,13 +67,17 @@ app.get("/api/sign-up", (req, res) => {
 app.get("/avvenuta-iscrizione", (req, res) => {
     res.sendFile('avvenuta_iscrizione.html', {root: __dirname + "/src/routes/avvenuta_iscrizione/"})
 })
+app.get("/about-us",(req,res)=>{
+    res.sendFile('aboutUs.html', {root: __dirname + "/src/routes/aboutUs/"})
+})
+
 app.get("/flights", (req, res) => {
     res.sendFile(`.${routesDir}/flights/flights.html`, {root: __dirname});
 });
 app.get("/booking", (req, res) => {
     res.sendFile(`.${routesDir}/booking/booking.html`, {root: __dirname});
 });
-app.get("/profile", (req, res) => {
+app.get("/profile",requireAuth,(req, res) => {
     res.sendFile('profilePage.html', {root: __dirname + "/src/routes/profilePage/"})
 })
 app.get("/retrieveFlights", async (req, res) => {
@@ -98,8 +103,8 @@ app.get("/biglietti-prenotati", async (req, res) => {
         email = req.user.email
         userIsIn = "googleusers"
     }
-
-    const query = 'SELECT * from biglietti JOIN ' + userIsIn + ' ON biglietti.email = ' + userIsIn + '.email WHERE biglietti.email = $1';
+//'SELECT id,biglietti.email,data,codicepartenza,codicearrivo,durata,orapartenza,oraarrivo,nomecompagnia,postonumero,cittapartenza,cittaarrivo,nome,cognome,username from biglietti JOIN ' + userIsIn + ' ON biglietti.email = ' + userIsIn + '.email WHERE biglietti.email = $1'
+    const query = 'SELECT biglietti.id,biglietti.email,data,codicepartenza,codicearrivo,durata,orapartenza,oraarrivo,nomecompagnia,postonumero,cittapartenza,cittaarrivo,nome,cognome,username from biglietti JOIN ' + userIsIn + ' ON biglietti.email = ' + userIsIn + '.email WHERE biglietti.email = $1';
     const values = [email];
     try {
         const resultQuery = await client.query(query, values);

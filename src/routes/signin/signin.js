@@ -42,9 +42,6 @@ $(document).ready(function() {
                 localStorage.setItem("email", email)
                 localStorage.setItem('authenticated', 'true');
                 localStorage.setItem('nameUser', data.username);
-                setTimeout(()=>{
-                    localStorage.setItem('authenticated', 'false')//dopo 10 minuti viene risettata a false
-                },600000);
                 window.location.href = "/dashboard";
             }else{
                 $("#error-message").text("Credenziali errate").show();
