@@ -1,0 +1,79 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": "847c0bd1-cb45-4951-8c9c-4fb2bf1531da",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "airline": "RYR",
+        "arrival": {
+          "aerodrome": {
+            "initial": "LIRF",
+            "scheduled": "LIRF"
+          },
+          "runwayTime": {
+            "initial": "2023-05-12T14:00:00Z",
+            "estimated": "2023-05-12T14:00:00Z"
+          }
+        },
+        "callsign": "RYR3UY",
+        "departure": {
+          "aerodrome": {
+            "actual": "LGAV",
+            "scheduled": "LGAV"
+          },
+          "runwayTime": {
+            "actual": "2023-05-12T13:12:00Z",
+            "initial": "2023-05-12T11:35:00Z"
+          }
+        },
+        "flightStatus": "AIRBORNE",
+        "iataFlightNumber": "FR1199",
+        "timestampProcessed": "2023-05-12T14:30:11Z",
+        "aircraftDescription": {
+          "aircraftCode": "B738",
+          "aircraftRegistration": "9HQAZ"
+        }
+      }
+    },
+    {
+      "id": "e977dfeb-c231-4441-9028-c7df8145d20d",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "airline": "RYR",
+        "arrival": {
+          "aerodrome": {
+            "initial": "LIRF",
+            "scheduled": "LIRF"
+          },
+          "runwayTime": {
+            "initial": "2023-05-13T10:30:00Z",
+            "estimated": "2023-05-13T10:30:00Z"
+          }
+        },
+        "departure": {
+          "aerodrome": {
+            "actual": "LGAV",
+            "scheduled": "LGAV"
+          },
+          "runwayTime": {
+            "initial": "2023-05-13T08:05:00Z"
+          }
+        },
+        "flightStatus": "SCHEDULED",
+        "iataFlightNumber": "FR1199",
+        "timestampProcessed": "2023-05-12T10:27:17Z",
+        "aircraftDescription": {
+          "aircraftCode": "B738"
+        }
+      }
+    }
+  ],
+  "results": {
+    "publishTime": "2023-05-12T14:30:17.829710832Z",
+    "status": "ok",
+    "total": 2
+  }
+}

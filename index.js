@@ -77,7 +77,10 @@ app.get("/flights", (req, res) => {
 app.get("/booking", (req, res) => {
     res.sendFile(`.${routesDir}/booking/booking.html`, {root: __dirname});
 });
-app.get("/profile",requireAuth,(req, res) => {
+app.get("/tracker", (req, res) => {
+    res.sendFile(`.${routesDir}/tracker/tracker.html`, {root: __dirname});
+});
+app.get("/profile", (req, res) => {
     res.sendFile('profilePage.html', {root: __dirname + "/src/routes/profilePage/"})
 })
 app.get("/retrieveFlights", async (req, res) => {
@@ -418,7 +421,8 @@ app.post('/save-ticket', (req, res) => {
             res.status(400);
             res.send(err);
         } else {
-            res.status(200)
+            res.status(200);
+            res.send('success');
         }
     })
 })

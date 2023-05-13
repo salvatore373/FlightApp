@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Homepage</title>
+
+    <!-- Link a font Lato -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
+    <script type="text/javascript" src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+
+    <script type="text/javascript" src="src/routes/common/bar.js"></script>
+    <script type="text/javascript" src="src/routes/tracker/tracker.js"></script>
+
+    <link rel="stylesheet" href="/src/routes/tracker/tracker.css">
+</head>
+<body onload="loadBar();">
+<div id="navbar" class="mb-4"></div>
+
+<div id="globalContainer" :style="cssVars">
+    <div class="d-flex flex-row justify-content-center align-items-center mx-4 mb-4">
+        <input id="flightCode" type="text" class="form-control" placeholder="Codice del volo" aria-label="Codice del volo"/>
+        <input v-if="!isLoading && !isError" class="primary-btn" value="Cerca" type="button" style="margin-left: 36px"
+               onclick="retrieveFlightInfo();"/>
+        <div v-if="isLoading" class="d-flex justify-content-center align-items-center">
+            <img class="info-icon"
+                 src="https://icon-library.com/images/spinner-icon-gif/spinner-icon-gif-0.jpg"
+                 alt="Loading Spinner"/>
+        </div>
+        <div v-if="!isLoading && isError" class="d-flex flex-column justify-content-center align-items-center">
+            <img class="info-icon"
+                 src="/assets/icons/warning.png"
+                 alt="Warning Sign"/>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column align-items-center">
+        <div class="arc" id="arc">
+            <!--            <div id="plane"><img src="/assets/icons/airplane-big.png" style="height: 80px; width: 80px;"/></div>-->
+        </div>
+    </div>
+    <div class="d-flex flex-row justify-content-between align-items-stretch text-cont">
+        <div>{{startCity}}</div>
+        <div>{{arrCity}}</div>
+    </div>
+</div>
+
+</body>
+</html>

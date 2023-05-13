@@ -88,19 +88,24 @@ ol {
     display: grid;
     grid-template-columns: repeat(3, 0.15fr) 0.3fr repeat(3, 0.15fr);
     padding-bottom: 8px;
+    column-gap: 4px;
 }
 
 .seat-unselected {
     /* https://stackoverflow.com/questions/42134731/css-change-button-style-after-click */
     background-color: var(--primary-color);
+    border-radius: 10%;
 }
 
 .seat-selected {
-    background-color: var(--tertiary-color);
+    background-color: var(--tertiary-contrast-color);
+    border-radius: 10%;
 }
 
 .seat-disabled {
-    background-color: grey;
+    background-color: rgb(229,229,229);
+    border-radius: 10%;
+    opacity: 0.50;
 }
 
 @-webkit-keyframes rubberBand {

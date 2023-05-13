@@ -1,0 +1,45 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "id": "cf2f4eac-a206-4be7-8ac5-618036307fb3",
+      "type": "Feature",
+      "geometry": null,
+      "properties": {
+        "airline": "BCS",
+        "arrival": {
+          "aerodrome": {
+            "initial": "LIMC",
+            "scheduled": "LIMC"
+          },
+          "runwayTime": {
+            "estimated": "2023-05-11T22:07:00Z"
+          }
+        },
+        "callsign": "BCS373",
+        "departure": {
+          "aerodrome": {
+            "actual": "KCVG",
+            "scheduled": "KCVG"
+          },
+          "runwayTime": {
+            "actual": "2023-05-11T14:04:00Z",
+            "initial": "2023-05-11T13:40:00Z"
+          }
+        },
+        "flightStatus": "AIRBORNE",
+        "iataFlightNumber": "QY373",
+        "timestampProcessed": "2023-05-11T15:45:06Z",
+        "aircraftDescription": {
+          "aircraftCode": "A333",
+          "aircraftRegistration": "DACVG"
+        }
+      }
+    }
+  ],
+  "results": {
+    "publishTime": "2023-05-11T15:45:26.725660353Z",
+    "status": "ok",
+    "total": 1
+  }
+}

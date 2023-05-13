@@ -64,7 +64,7 @@ https://github.com/massimilianobaldo-university/ProjectDB/tree/main/csv/new
 <br/><br/>
 
 #### API voli
-Traking: https://aviationstack.com/product
+Traking: https://developer.laminardata.aero/documentation/flightdata#!/Flights32By32Airline32and32Flight32Number/get_airlines_airline_prefix_flights_flight_number
 Deals: https://developers.amadeus.com/self-service/category/air/api-doc/flight-offers-search/api-reference
 <br/><br/>
 

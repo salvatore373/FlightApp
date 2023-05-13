@@ -1,0 +1,56 @@
+.text-cont {
+    margin-top: 44px;
+    margin-left: 15vw;
+    margin-right: 15vw;
+
+    font-size: 48px;
+    font-weight: 300;
+}
+
+.arc {
+    width: 60vw;
+    aspect-ratio: 2/1;
+    border: 20px dotted var(--background-color);
+    border-bottom: 0;
+    border-radius: calc((200 * 60vw) / 260) calc((200 * 60vw) / 260) 0 0;
+    box-sizing: border-box;
+    display: grid;
+}
+
+.arc:before,
+.arc:after,
+.arc div {
+    content: "";
+    width: 20px;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    grid-area: 1/1;
+    background: var(--background-color);
+}
+
+.arc > div {
+    background: transparent;
+    margin: auto auto -10px;
+    animation: a 4s ease-in both 0s;
+}
+
+@keyframes a { /* 115px = (250px - 20px)/2 */
+    from {
+        transform: rotate(-180deg) translate(calc((60vw - 20px) / 2))
+    }
+    to {
+        transform: rotate(-90deg) translate(calc((60vw - 20px) / 2));
+    }
+}
+
+.arc:before {
+    margin: auto auto -10px -20px;
+}
+
+.arc:after {
+    margin: auto -20px -10px auto;
+}
+
+.info-icon {
+    height: 48px;
+}

@@ -84,7 +84,7 @@
         </div>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal to force seats selection -->
     <div class="modal" id="seatsModal">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -104,6 +104,30 @@
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Chiudi</button>
                 </div>
 
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Modal for tickets result -->
+    <div class="modal" id="ticketsSaveModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <!-- Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Prenotazione dei biglietti</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <!-- Body -->
+                <div class="modal-body">
+                    <p>{{ticketsSaveModalMsg}}</p>
+                </div>
+                <!-- Footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn primary-btn" data-bs-dismiss="modal"
+                            onclick="location.href = '/dashboard'">Vai alla pagina iniziale
+                    </button>
+                </div>
             </div>
         </div>
     </div>

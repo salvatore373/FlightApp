@@ -1,5 +1,10 @@
+body {
+    background-color: var(--background-color) !important; /*DEBUG*/
+}
+
 .summary {
-    background: rgba(155, 232, 187, 0.41);
+    /* background: rgba(155, 232, 187, 0.41); */
+    background: var(--primary-light-color);
     width: 95vw;
 
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
