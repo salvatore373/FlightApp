@@ -69,3 +69,11 @@ function initForm() {
         document.location.href = flightsPage.pathname + flightsPage.search
     });
 }
+
+function selectRandomDestination() {
+    let datalist = $('#airportsList')[0].childNodes;
+    let randIndex = Math.floor(Math.random() * datalist.length);
+    let randDestination = datalist[randIndex].innerText
+
+    $('#arrivalField').val(randDestination);
+}

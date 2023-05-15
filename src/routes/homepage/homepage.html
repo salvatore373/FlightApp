@@ -14,7 +14,8 @@
     <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css">
     <script type="text/javascript" src="../../bootstrap/js/bootstrap.bundle.min.js"></script>
 
-    <script type="text/javascript" src="src/routes/common/bar.js"></script><script type="text/javascript" src="src/utils/constants.js"></script>
+    <script type="text/javascript" src="src/routes/common/bar.js"></script>
+    <script type="text/javascript" src="src/utils/constants.js"></script>
     <script type="text/javascript" src="src/routes/homepage/homepage.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
@@ -61,7 +62,8 @@
             <!-- Row 1 -->
             <div class="d-flex flex-wrap gap-3 flex-row form-row align-items-center mb-3">
                 <div class="form-group form-floating form-outline flex-grow-1">
-                    <input type="text" class="form-control" name="departure" id="departureField" list="airportsList" autocomplete="on" placeholder="Aeroporto di Partenza" required>
+                    <input type="text" class="form-control" name="departure" id="departureField" list="airportsList"
+                           autocomplete="on" placeholder="Aeroporto di Partenza" required>
                     <label style="margin-left: 0px;" for="departureField">Aeroporto di Partenza</label>
                     <datalist id="airportsList"></datalist>
                     <script>loadAirportsList();</script>
@@ -75,7 +77,8 @@
                 </div>
                 <div class="form-group row">
                     <div class="form-group form-floating form-outline">
-                        <input type="number" class="form-control" id="childrenNumField" placeholder="Bambini" value="0" max="10" required>
+                        <input type="number" class="form-control" id="childrenNumField" placeholder="Bambini" value="0"
+                               max="10" required>
                         <label for="childrenNumField">Bambini</label>
                     </div>
                 </div>
@@ -84,7 +87,8 @@
             <!-- Row 2 -->
             <div class="d-flex flex-wrap gap-3 form-row align-items-center mb-3">
                 <div class="form-group form-floating form-outline flex-grow-1">
-                    <input type="text" class="form-control" id="arrivalField" list="airportsList" placeholder="Aeroporto di Arrivo" required>
+                    <input type="text" class="form-control" id="arrivalField" list="airportsList"
+                           placeholder="Aeroporto di Arrivo" required>
                     <label style="margin-left: 0px;" for="arrivalField">Aeroporto di Arrivo</label>
                 </div>
                 <div class="form-group row">
@@ -105,9 +109,10 @@
 
             <!-- Row 3 -->
             <div class="d-flex align-items-center justify-content-center mb-3">
-                <!-- TODO: add random selector and baggage collapsable menu -->
+                <!-- TODO: add random selector -->
                 <div class="form-group form-check">
-                    <input class="form-check-input" type="checkbox" id="onlyDepCheckbox" onchange="toggleArrivalDate();">
+                    <input class="form-check-input" type="checkbox" id="onlyDepCheckbox"
+                           onchange="toggleArrivalDate();">
                     <label class="form-check-label" for="onlyDepCheckbox">
                         Solo Andata
                     </label>
@@ -118,6 +123,9 @@
             <div class="d-flex align-items-center justify-content-center">
                 <div class="form-group col-auto">
                     <button type="submit" class="primary-btn">Cerca Voli</button>
+                    <button type="button" class="primary-btn" onclick="selectRandomDestination();">Destinazione
+                        Casuale
+                    </button>
                 </div>
             </div>
         </form>
