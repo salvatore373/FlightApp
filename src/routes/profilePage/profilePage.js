@@ -176,9 +176,9 @@ $(document).ready(function() {
          
         if(response.length == 0){
           console.log("zero Biglietti")
-          $("#casoZeroBiglietti").text("Non hai acquistato nessun biglietto")
+          $("#casoZeroBiglietti").text("Non hai acquistato nessun biglietto").show()
         }else{
-          console.log(response.length)
+          console.log(response)
           //Nascondo il messaggio del caso di zero biglietti
           $("#casoZeroBiglietti").hide()
 
