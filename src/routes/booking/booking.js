@@ -1,4 +1,3 @@
-console.log(window.location.search) // DEBUG
 let airports = null;
 let vueContext;
 
@@ -6,8 +5,8 @@ $(document).ready(() => {
     Vue.createApp({
         data: function () {
             return {
-                isLoading: false, // TODO: set to true // Whether we are executing the request to retrieve results TODO: implement
-                isError: false, // Whether the API to retrieve results returned an error TODO: implement
+                isLoading: true, // Whether we are executing the request to retrieve results
+                isError: false, // Whether the API to retrieve results returned an error
                 flight: {}, // The flight selected by the user in the flights page
                 zones: [], // The data about the departure and the arrival airports
                 additionalInfo: [], // Some information about the flight, in the form Header-Content
@@ -45,12 +44,12 @@ $(document).ready(() => {
                 getAdditionalInfo(f, this);
                 this.isLoading = false;
 
-                // TODO: remove comment localStorage.setItem('selectedFlight', JSON.stringify(flights.slice(1)));
+                // DEBUG comment line below for testing
+                localStorage.setItem('selectedFlight', JSON.stringify(flights.slice(1)));
             }
         },
         mounted() {
-
-            // DEBUG
+            // DEBUG test with sample flight
             /*localStorage.setItem('selectedFlight', JSON.stringify(
                 [{
                     "depCode": 'FCO',

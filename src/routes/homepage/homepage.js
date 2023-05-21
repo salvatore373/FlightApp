@@ -41,16 +41,16 @@ function initForm() {
     let arrDate = document.getElementById("arrivalDateField");
     let onlyGo = document.getElementById('onlyDepCheckbox');
 
-    // DEBUG fill form
-    dep.value = "Leonardo da Vinci–Fiumicino Airport (FCO), Rome, Italy";
-    adults.value = 1;
-    children.value = 0;
-    arr.value = 'John F Kennedy International Airport (JFK), New York, United States';
-    depDate.value = '2023-07-14';
-    arrDate.value = '2023-07-14';
-    onlyGo.checked = false;
+    // DEBUG fill form automatically with sample data
+    // dep.value = "Leonardo da Vinci–Fiumicino Airport (FCO), Rome, Italy";
+    // adults.value = 1;
+    // children.value = 0;
+    // arr.value = 'John F Kennedy International Airport (JFK), New York, United States';
+    // depDate.value = '2023-07-14';
+    // arrDate.value = '2023-07-14';
+    // onlyGo.checked = false;
 
-    if (dep.value === arr.value) {
+    if (dep.value === arr.value && dep.value !== '' && arr.value !== '') {
         alert("Gli aeroporti di partenza e di arrivo devono essere diversi.");
     }
 

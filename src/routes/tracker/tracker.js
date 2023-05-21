@@ -1,4 +1,3 @@
-var aaaaa = null // DEBUG
 let vueContext;
 let icaoJson = null;
 
@@ -23,19 +22,18 @@ $(document).ready(() => {
 async function retrieveFlightInfo() {
     vueContext.isLoading = true;
 
-    // let code = $('#flightCode').val();
-    let code = 'RYR1199' // DEBUG
+    // let code = 'RYR1199' // DEBUG: test code
+    let code = $('#flightCode').val();
     let airlineCode = code.slice(0, 3);
     let flightCode = code.slice(3);
-    // let url = new URL(`https://api.laminardata.aero/v1/airlines/${airlineCode}/flights/${flightCode}?`);
-    // url.searchParams.append('user_key', 'e841ebfb7b6ffe547fd8e65747dced50');
+    let url = new URL(`https://api.laminardata.aero/v1/airlines/${airlineCode}/flights/${flightCode}?`);
+    url.searchParams.append('user_key', 'e841ebfb7b6ffe547fd8e65747dced50');
 
-    url = new URL('http://localhost:3000/example-tracker-res2.json'); // DEBUG
+    // url = new URL('http://localhost:3000/example-tracker-res2.json'); // DEBUG uncomment url above and comment this to get real data
 
     $.get({
             url: url,
             success: function (res) {
-                aaaaa = res;
                 console.log(res)
 
                 if (res.features.length === 0) {

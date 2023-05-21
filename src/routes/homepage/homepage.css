@@ -1,12 +1,12 @@
 body {
-  background-color: var(--background-color) !important; /*DEBUG*/
+  background-color: var(--background-color) !important;
 }
 
 .fastBooker {
   width: 60%;
   position: absolute !important;
   top: 60%;
-  background-color: var(--primary-light-color); /*DEBUG*/
+  background-color: var(--primary-light-color);
 
   margin-left: 24px;
 }
