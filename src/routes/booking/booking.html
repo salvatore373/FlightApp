@@ -124,7 +124,10 @@
                 </div>
                 <!-- Footer -->
                 <div class="modal-footer">
-                    <button type="button" class="btn primary-btn" data-bs-dismiss="modal"
+                    <button v-if="wayBackToConfirm" class="btn primary-btn" data-bs-dismiss="modal"
+                            onclick="location.href = '/booking'">Prenota il ritorno
+                    </button>
+                    <button v-else type="button" class="btn primary-btn" data-bs-dismiss="modal"
                             onclick="location.href = '/dashboard'">Vai alla pagina iniziale
                     </button>
                 </div>
