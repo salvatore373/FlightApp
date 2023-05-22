@@ -42,7 +42,7 @@ async function retrieveFlightInfo() {
                     vueContext.isError = true;
                 } else {
                     // Get the trip times
-                    let obj = res.features[0].properties
+                    let obj = res.features[res.features.length - 1].properties
                     let depTime = obj.departure.runwayTime.estimated;
                     if (!depTime) depTime = obj.departure.runwayTime.actual
                     if (!depTime) depTime = obj.departure.runwayTime.initial
@@ -63,7 +63,6 @@ async function retrieveFlightInfo() {
                     depTime = (new Date(depTime)).getTime();
                     arrTime = (new Date(arrTime)).getTime();
                     let now = new Date();
-                    now.setHours(now.getHours() + 2);
                     now = now.getTime();
                     let arcPercentage = (now - depTime) / (arrTime - depTime);
 
